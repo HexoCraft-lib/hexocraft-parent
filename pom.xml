@@ -1,0 +1,1016 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2015 hexosse <hexosse@gmail.com>
+
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+           http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Artifact properties -->
+    <groupId>com.github.hexocraft</groupId>
+    <artifactId>hexocraft-parent</artifactId>
+    <version>1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <!-- Description -->
+    <name>Hexocraft Parent</name>
+    <description>Hexocraft Parent POM provides common settings for all Hexocraft components.</description>
+    <url>https://github.com/hexocraft-lib/hexocraft-parent</url>
+
+    <!-- Organization -->
+    <organization>
+        <name>Hexocraft</name>
+        <url>https://github.com/hexocraft</url>
+    </organization>
+
+    <!-- Want to contibute? Anybody is welcome -->
+    <developers>
+        <developer>
+            <id>hexosse</id>
+            <name>hexosse</name>
+            <url>https://github.com/hexosse</url>
+        </developer>
+    </developers>
+
+    <!-- License -->
+    <licenses>
+        <license>
+            <name>Apache-2.0</name>
+            <url>https://www.opensource.org/licenses/Apache-2.0</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <!-- Source control manager -->
+    <scm>
+        <url>http://github.com/hexocraft-lib/hexocraft-parent</url>
+        <connection>scm:git:git://github.com/hexocraft-lib/hexocraft-parent.git</connection>
+        <developerConnection>scm:git:git@github.com:hexocraft-lib/hexocraft-parent.git</developerConnection>
+    </scm>
+
+    <!-- Issue management -->
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/hexocraft-lib/hexocraft-parent/issues</url>
+    </issueManagement>
+
+    <!-- Jenkins server -->
+    <ciManagement>
+        <system>Jenkins</system>
+        <url>http://jenkins.hexocube.fr/job/hexocraft/job/hexocraft-parent</url>
+    </ciManagement>
+
+    <!-- Project properties -->
+    <properties>
+        <!-- Owner data -->
+        <owner.name>hexosse</owner.name>
+        <owner.email>hexosse@gmail.com</owner.email>
+
+        <!-- Use java 1.8 everywhere -->
+        <jdk.version>1.8</jdk.version>
+        <jdk.version.number>8</jdk.version.number>
+        <maven.compiler.source>${jdk.version}</maven.compiler.source>
+        <maven.compiler.target>${jdk.version}</maven.compiler.target>
+        <maven.version>3.6.1</maven.version>
+
+        <!-- Source code and resources must be encoded in UTF-8 -->
+        <project.encoding>UTF-8</project.encoding>
+        <project.build.sourceEncoding>${project.encoding}</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>${project.encoding}</project.reporting.outputEncoding>
+
+        <!-- Bukkit versions -->
+        <bukkit.current>${bukkit.latest}</bukkit.current>
+        <bukkit.1.8.3>1.8.3-R0.1-SNAPSHOT</bukkit.1.8.3>
+        <bukkit.1.8.8>1.8.8-R0.1-SNAPSHOT</bukkit.1.8.8>
+        <bukkit.1.9.4>1.9.4-R0.1-SNAPSHOT</bukkit.1.9.4>
+        <bukkit.1.10.2>1.10.2-R0.1-SNAPSHOT</bukkit.1.10.2>
+        <bukkit.1.11.2>1.11.2-R0.1-SNAPSHOT</bukkit.1.11.2>
+        <bukkit.1.12.2>1.12.2-R0.1-SNAPSHOT</bukkit.1.12.2>
+        <bukkit.1.13.2>1.13.2-R0.1-SNAPSHOT</bukkit.1.13.2>
+        <bukkit.1.14.4>1.14.4-R0.1-SNAPSHOT</bukkit.1.14.4>
+        <bukkit.latest>${bukkit.1.14.4}</bukkit.latest>
+
+        <!-- Bukkit/Spigot plugins dependencies -->
+        <!-- <vault.version>1.5.6</vault.version> -->
+        
+        <!-- HexoCraft libs versions -->
+        <!-- List of kexocraft libs -->
+
+        <!-- External libs dependencies -->
+        <commands.version>0.5.0-SNAPSHOT</commands.version>                             <!-- https://github.com/aikar/commands -->
+        <gson.version>2.8.6</gson.version>                                              <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+        <guava.version>28.1-jre</guava.version>                                         <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+        <taskchain.version>3.7.2</taskchain.version>                                    <!-- https://github.com/aikar/TaskChain -->
+        <kyoripowered.text.version>3.0.2</kyoripowered.text.version>                    <!-- https://github.com/KyoriPowered/text -->
+        <kyoripowered.text-extras.version>3.0.3</kyoripowered.text-extras.version>      <!-- https://github.com/KyoriPowered/text-extras -->
+        <kyoripowered.event.version>3.0.0</kyoripowered.event.version>                  <!-- https://github.com/KyoriPowered/event -->
+        <spongepowered.configurate.version>3.6.1</spongepowered.configurate.version>    <!-- https://github.com/SpongePowered/Configurate -->
+
+        <!-- Maven Plugins -->
+        <git-commit-id-plugin.version>3.0.1</git-commit-id-plugin.version>              <!-- https://github.com/ktoso/maven-git-commit-id-plugin/blob/master/README.md -->
+        <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>                <!-- https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin -->
+        <license-maven-plugin.version>3.0</license-maven-plugin.version>                <!-- https://mvnrepository.com/artifact/com.mycila/license-maven-plugin -->
+        <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>                  <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-clean-plugin -->
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>            <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
+        <maven-dependency-plugin.version>3.1.1</maven-dependency-plugin.version>        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-dependency-plugin -->
+        <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>             <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-deploy-plugin -->
+        <maven-enforcer-plugin.version>3.0.0-M2</maven-enforcer-plugin.version>         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-enforcer-plugin -->
+        <maven-install-plugin.version>3.0.0-M1</maven-install-plugin.version>           <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-install-plugin -->
+        <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>                      <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-jar-plugin -->
+        <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>              <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-javadoc-plugin -->
+        <maven-shade-plugin.version>3.2.1</maven-shade-plugin.version>                  <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-shade-plugin -->
+        <maven-source-plugin.version>3.2.0</maven-source-plugin.version>                <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-source-plugin -->
+        <maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
+        <proguard-maven-plugin.version>2.0.14</proguard-maven-plugin.version>           <!-- https://wvengen.github.io/proguard-maven-plugin -->
+        <proguard-base.version>6.2.0</proguard-base.version>                            <!-- https://mvnrepository.com/artifact/net.sf.proguard/proguard-base -->
+        <echo-maven-plugin.version>0.3.0</echo-maven-plugin.version>                    <!-- https://mvnrepository.com/artifact/com.soebes.maven.plugins/echo-maven-plugin -->
+        <build-helper-maven-plugin.version>3.0.0</build-helper-maven-plugin.version>    <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/build-helper-maven-plugin -->
+        <buildnumber-maven-plugin.version>1.4</buildnumber-maven-plugin.version>        <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/buildnumber-maven-plugin -->
+
+        <!-- External dependencies (Test) -->
+        <junit.jupiter.version>5.6.0-M1</junit.jupiter.version>                         <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
+        <junit.platform.version>1.3.2</junit.platform.version>                          <!-- https://mvnrepository.com/artifact/org.junit.platform/junit-platform-surefire-provider -->
+        <mockito-junit-jupiter.version>3.1.0</mockito-junit-jupiter.version>            <!-- https://mvnrepository.com/artifact/org.mockito/mockito-junit-jupiter -->
+
+        <!-- Checkerframework: Global settings -->
+        <checkerframework.version>2.5.7</checkerframework.version>                      <!-- https://mvnrepository.com/artifact/org.checkerframework -->
+        <checkerframework.jdk>jdk${jdk.version.number}</checkerframework.jdk>
+
+        <!-- failsafe: Global settings -->
+        <maven-failsafe-plugin.version>3.0.0-M4</maven-failsafe-plugin.version>         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-failsafe-plugin -->
+        <failsafe.argline>''</failsafe.argline>
+        <failsafe.skipTests>false</failsafe.skipTests>
+
+        <!-- SonarQube: Global settings -->                                             <!-- https://docs.sonarqube.org/display/SONAR/Analysis+Parameters -->
+        <sonar-maven-plugin.version>3.7.0.1746</sonar-maven-plugin.version>             <!-- https://mvnrepository.com/artifact/org.sonarsource.scanner.maven/sonar-maven-plugin -->
+        <sonar.host.url>http://sonarqube.hexocube.fr/</sonar.host.url>
+        <sonar.projectKey>${project.artifactId}</sonar.projectKey>
+        <sonar.language>java</sonar.language>
+        <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+        <sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
+        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>                     <!-- Don't let Sonar execute tests! Maven will run them and produce some reports for Sonar -->
+        <jacoco.lib.path>${settings.localRepository}/org/jacoco/org.jacoco.agent/${jacoco-maven-plugin.version}/org.jacoco.agent-${jacoco-maven-plugin.version}-runtime.jar</jacoco.lib.path>
+        <javaagent>${jacoco.lib.path}</javaagent>
+        <!-- SonarQube: Quality reports -->
+        <sonar.surefire.reportsPath>${project.reporting.outputDirectory}/surefire-reports</sonar.surefire.reportsPath>
+        <sonar.failsafe.reportsPath>${project.reporting.outputDirectory}/failsafe-reports</sonar.failsafe.reportsPath>
+        <jacoco.ut.summary>${project.reporting.outputDirectory}/jacoco-ut</jacoco.ut.summary>
+        <jacoco.it.summary>${project.reporting.outputDirectory}/jacoco-it</jacoco.it.summary>
+        <jacoco.ut.execution.data.file>${project.build.directory}/jacoco.exec</jacoco.ut.execution.data.file>
+        <jacoco.it.execution.data.file>${project.build.directory}/jacoco-it.exec</jacoco.it.execution.data.file>
+
+        <!-- surefire: Global settings -->
+        <surefire.argline>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</surefire.argline>
+        <surefire.skipTests>false</surefire.skipTests>
+
+    </properties>
+
+    <!-- HexoCraft artifactory repository should have all needed artifacts to build the libs -->
+    <repositories>
+       <repository>
+            <id>hexocraft-repo</id>
+            <url>http://repo.hexocube.fr/artifactory/public</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>hexocraft-repo</id>
+            <url>http://repo.hexocube.fr/artifactory/public</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <!-- HexoCraft artifactory server -->
+    <distributionManagement>
+        <repository>
+            <id>hexocraft-releases</id>
+            <url>http://repo.hexocube.fr/artifactory/release-local</url>
+        </repository>
+        <snapshotRepository>
+            <id>hexocraft-snapshots</id>
+            <url>http://repo.hexocube.fr/artifactory/snapshot-local</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <!-- Dependencies -->
+    <dependencies>
+    </dependencies>
+
+    <!-- Project and subproject dependencies -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- ********** Bukkit / Spigot ********** -->
+            <!-- Bukkit -->
+            <dependency>
+                <groupId>org.bukkit</groupId>
+                <artifactId>bukkit</artifactId>
+                <version>${bukkit.current}</version>
+                <scope>provided</scope>
+            </dependency>
+            <!-- Craftbukkit -->
+            <dependency>
+                <groupId>org.bukkit</groupId>
+                <artifactId>craftbukkit</artifactId>
+                <version>${bukkit.current}</version>
+                <scope>provided</scope>
+            </dependency>
+            <!-- Spigot-API -->
+            <dependency>
+                <groupId>org.spigotmc</groupId>
+                <artifactId>spigot-api</artifactId>
+                <version>${bukkit.current}</version>
+                <scope>provided</scope>
+            </dependency>
+            <!-- Spigot -->
+            <dependency>
+                <groupId>org.spigotmc</groupId>
+                <artifactId>spigot</artifactId>
+                <version>${bukkit.current}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <!-- ********** HexoCraft libs ********** -->
+
+            <!-- ********** External libs ********** -->
+            <!-- Commands -->
+            <dependency>
+                <groupId>co.aikar</groupId>
+                <artifactId>acf-bukkit</artifactId>
+                <version>${commands.version}</version>
+            </dependency>
+            <!-- Gson -->
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>${gson.version}</version>
+            </dependency>
+            <!-- Guava -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>            
+            <!-- Taskchain -->
+            <dependency>
+                <groupId>co.aikar</groupId>
+                <artifactId>taskchain-bukkit</artifactId>
+                <version>${taskchain.version}</version>
+            </dependency>
+            <!-- kyori text-api -->
+            <dependency>
+                <groupId>net.kyori</groupId>
+                <artifactId>text-api</artifactId>
+                <version>${kyoripowered.text.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.checkerframework</groupId>
+                        <artifactId>checker-qual</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <!-- kyori text-serializer-gson -->
+            <dependency>
+                <groupId>net.kyori</groupId>
+                <artifactId>text-serializer-gson</artifactId>
+                <version>${kyoripowered.text.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.google.code.gson</groupId>
+                        <artifactId>gson</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <!-- kyori text-serializer-legacy -->
+            <dependency>
+                <groupId>net.kyori</groupId>
+                <artifactId>text-serializer-legacy</artifactId>
+                <version>${kyoripowered.text.version}</version>
+            </dependency>
+            <!-- kyori text-serializer-plain -->
+            <dependency>
+                <groupId>net.kyori</groupId>
+                <artifactId>text-serializer-plain</artifactId>
+                <version>${kyoripowered.text.version}</version>
+            </dependency>
+            <!-- kyori event -->
+            <dependency>
+                <groupId>net.kyori</groupId>
+                <artifactId>event-api</artifactId>
+                <version>${kyoripowered.event.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.google.guava</groupId>
+                        <artifactId>guava</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.checkerframework</groupId>
+                        <artifactId>checker-qual</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <!-- configurate Core -->
+            <dependency>
+                <groupId>org.spongepowered</groupId>
+                <artifactId>configurate-core</artifactId>
+                <version>${spongepowered.configurate.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.google.guava</groupId>
+                        <artifactId>guava</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.checkerframework</groupId>
+                        <artifactId>checker-qual</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <!-- configurate Gson -->
+            <dependency>
+                <groupId>org.spongepowered</groupId>
+                <artifactId>configurate-gson</artifactId>
+                <version>${spongepowered.configurate.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.google.code.gson</groupId>
+                        <artifactId>gson</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <!-- configurate Hcon -->
+            <dependency>
+                <groupId>org.spongepowered</groupId>
+                <artifactId>configurate-hocon</artifactId>
+                <version>${spongepowered.configurate.version}</version>
+            </dependency>
+            <!-- configurate Yaml -->
+            <dependency>
+                <groupId>org.spongepowered</groupId>
+                <artifactId>configurate-yaml</artifactId>
+                <version>${spongepowered.configurate.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.yaml</groupId>
+                        <artifactId>snakeyaml</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <!-- Proguard -->
+            <dependency>
+                <groupId>net.sf.proguard</groupId>
+                <artifactId>proguard-base</artifactId>
+                <version>${proguard-base.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+
+            <!-- ********** Test ********** -->
+            <!-- JUnit 5 -->
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>${junit.jupiter.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.platform</groupId>
+                <artifactId>junit-platform-launcher</artifactId>
+                <version>${junit.platform.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <!-- Mockito -->
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-junit-jupiter</artifactId>
+                <version>${mockito-junit-jupiter.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <!-- Annotations from the Checker Framework: nullness, interning, locking, ... -->
+            <dependency>
+                <groupId>org.checkerframework</groupId>
+                <artifactId>checker-qual</artifactId>
+                <version>${checkerframework.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.checkerframework</groupId>
+                <artifactId>${checkerframework.jdk}</artifactId>
+                <version>${checkerframework.version}</version>
+                <scope>provided</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- Build options -->
+    <build>
+        <!-- Basics -->
+        <defaultGoal>clean verify package install</defaultGoal>
+
+        <!-- Resources -->
+        <resources>
+            <!-- default resources folder -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+            <!-- add license file to in jars -->
+            <resource>
+                <directory>${maven.multiModuleProjectDirectory}</directory>
+                <targetPath>META-INF</targetPath>
+                <includes>
+                    <include>LICENSE</include>
+                </includes>
+            </resource>
+        </resources>
+        <testResources>
+            <!-- default test resources folder -->
+            <testResource>
+                <directory>src/test/resources</directory>
+            </testResource>
+            <!-- add license file to in jars -->
+            <testResource>
+                <directory>${maven.multiModuleProjectDirectory}</directory>
+                <targetPath>META-INF</targetPath>
+                <includes>
+                    <include>LICENSE</include>
+                </includes>
+            </testResource>
+        </testResources>
+
+        <!-- Plugin Management -->
+        <pluginManagement>
+            <plugins>
+                <!-- Clean -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>${maven-clean-plugin.version}</version>
+                </plugin>
+                <!-- Compiler -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
+                    <configuration>
+                        <!-- Force source and target -->
+                        <source>${jdk.version}</source>
+                        <target>${jdk.version}</target>
+                        <encoding>${project.encoding}</encoding>
+                        <!-- Increase the numbers of errors or warning to display -->
+                        <compilerArguments>
+                            <Xmaxerrs>10000</Xmaxerrs>
+                            <Xmaxwarns>10000</Xmaxwarns>
+                        </compilerArguments>
+                        <!-- Processors to use -->
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.checkerframework</groupId>
+                                <artifactId>checker</artifactId>
+                                <version>${checkerframework.version}</version>
+                            </path>
+                        </annotationProcessorPaths>
+                        <!-- Processors -->
+                        <annotationProcessors>
+                            <!-- Add all the checkers to enable here -->
+                            <annotationProcessor>org.checkerframework.checker.fenum.FenumChecker</annotationProcessor>
+                            <annotationProcessor>org.checkerframework.checker.formatter.FormatterChecker</annotationProcessor>
+                            <annotationProcessor>org.checkerframework.checker.lock.LockChecker</annotationProcessor>
+                            <annotationProcessor>org.checkerframework.checker.nullness.NullnessChecker</annotationProcessor>
+                            <annotationProcessor>org.checkerframework.checker.optional.OptionalChecker</annotationProcessor>
+                            <annotationProcessor>org.checkerframework.checker.regex.RegexChecker</annotationProcessor>
+                            <annotationProcessor>org.checkerframework.checker.signature.SignatureChecker</annotationProcessor>
+                            <annotationProcessor>org.checkerframework.checker.signedness.SignednessChecker</annotationProcessor>
+                        </annotationProcessors>
+                        <compilerArgs>
+                            <!-- location of the annotated JDK, which comes from a Maven dependency -->
+                            <arg>-Xbootclasspath/p:org.checkerframework:jdk${jdk.version.number}:jar</arg>
+                            <!-- Print a stack trace whenever an internal Checker Framework error occurs-->
+                            <arg>-AprintErrorStack</arg>
+                            <!-- Turns checker errors into warnings -->
+                            <arg>-Awarns</arg>
+                            <!-- Enables or disables optional checks-->
+                            <arg>-Alint</arg>
+                        </compilerArgs>
+                    </configuration>
+                </plugin>
+                <!-- Dependency -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>${maven-dependency-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <goals><goal>properties</goal></goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- Enforcer -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>${maven-enforcer-plugin.version}</version>
+                    <configuration>
+                        <rules>
+                            <requireMavenVersion><version>${maven.version}</version></requireMavenVersion>
+                            <requireJavaVersion><version>${maven.compiler.target}</version></requireJavaVersion>
+                        </rules>
+                        <fail>true</fail>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>enforce-versions</id>
+                            <goals><goal>enforce</goal></goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- Source -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>${maven-source-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <goals><goal>jar</goal></goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <archive>
+                            <manifest>
+                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                            </manifest>
+                        </archive>
+                    </configuration>
+                </plugin>
+                <!-- Javadoc -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>${maven-javadoc-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>attach-javadocs</id>
+                            <goals><goal>jar</goal></goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <quiet>true</quiet>
+                        <source>${maven.compiler.source}</source>
+                        <encoding>${project.encoding}</encoding>
+                        <docencoding>${project.encoding}</docencoding>
+                        <author>true</author>
+                        <doctitle>${project.name} ${project.version} : ${project.description}</doctitle>
+                        <windowtitle>${project.name} ${project.version}</windowtitle>
+                        <packagesheader>${project.url}</packagesheader>
+                        <includeDependencySources>true</includeDependencySources>
+                        <archive>
+                            <manifest>
+                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                            </manifest>
+                        </archive>
+                    </configuration>
+                </plugin>
+                <!-- Jar -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${maven-jar-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <goals><goal>test-jar</goal></goals>
+                            <configuration>
+                                <!-- Avoids an error when releasing the parent pom -->
+                                <skipIfEmpty>true</skipIfEmpty>
+                            </configuration>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <archive>
+                            <manifestEntries>
+                                <Specification-Title>${project.name}</Specification-Title>
+                                <Specification-Version>${project.version}</Specification-Version>
+                                <Specification-Vendor>${project.organization.name}</Specification-Vendor>
+                                <Implementation-Title>${project.name}</Implementation-Title>
+                                <Implementation-Version>${project.version}</Implementation-Version>
+                                <Implementation-Vendor>${project.organization.name}</Implementation-Vendor>
+                                <X-Compile-Source-JDK>${maven.compiler.source}</X-Compile-Source-JDK>
+                                <X-Compile-Target-JDK>${maven.compiler.target}</X-Compile-Target-JDK>
+                            </manifestEntries>
+                        </archive>
+                    </configuration>
+                </plugin>
+                <!-- Shade -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>${maven-shade-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals><goal>shade</goal></goals>
+                            <configuration>
+                                <minimizeJar>true</minimizeJar>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- Git commit id -->
+                <plugin>
+                    <groupId>pl.project13.maven</groupId>
+                    <artifactId>git-commit-id-plugin</artifactId>
+                    <version>${git-commit-id-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <phase>validate</phase>
+                            <goals><goal>revision</goal></goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <verbose>false</verbose>
+                        <failOnNoGitDirectory>true</failOnNoGitDirectory>
+                        <failOnUnableToExtractRepoInfo>false</failOnUnableToExtractRepoInfo>
+                        <useNativeGit>true</useNativeGit>
+                        <skipPoms>true</skipPoms>
+                        <runOnlyOnce>true</runOnlyOnce>
+                        <injectAllReactorProjects>true</injectAllReactorProjects>
+                        <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                        <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
+                        <format>json</format>
+                        <gitDescribe>
+                            <skip>false</skip>
+                            <always>false</always>
+                            <dirty>-dirty</dirty>
+                        </gitDescribe>
+                    </configuration>
+                </plugin>
+                <!-- build-helper -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>${build-helper-maven-plugin.version}</version>
+                </plugin>
+                <!-- buildnumber -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>buildnumber-maven-plugin</artifactId>
+                    <version>${buildnumber-maven-plugin.version}</version>
+                </plugin>
+                <!-- ProGuard -->
+                <plugin>
+                    <groupId>com.github.wvengen</groupId>
+                    <artifactId>proguard-maven-plugin</artifactId>
+                    <version>${proguard-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals><goal>proguard</goal></goals>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>net.sf.proguard</groupId>
+                            <artifactId>proguard-base</artifactId>
+                            <version>${proguard-base.version}</version>
+                            <scope>runtime</scope>
+                        </dependency>
+                    </dependencies>
+                    <configuration>
+                        <proguardVersion>${proguard-base.version}</proguardVersion>
+                        <proguardInclude>${basedir}/proguard.conf</proguardInclude>
+                    </configuration>
+                </plugin>
+                <!-- Install -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>${maven-install-plugin.version}</version>
+                </plugin>
+                <!-- Deploy -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>${maven-deploy-plugin.version}</version>
+                </plugin>
+                <!-- License -->
+                <plugin>
+                    <groupId>com.mycila</groupId>
+                    <artifactId>license-maven-plugin</artifactId>
+                    <version>${license-maven-plugin.version}</version>
+                    <configuration>
+                        <header>https://raw.githubusercontent.com/hexocraft-lib/hexocraft-parent/master/LICENCE_HEADER</header>
+                        <aggregate>true</aggregate>
+                        <properties>
+                            <owner>${owner.name}</owner>
+                            <email>${owner.email}</email>
+                            <inceptionYear>2015</inceptionYear>
+                        </properties>
+                        <excludes>
+                            <exclude>**/LICENCE_HEADER</exclude>
+                            <exclude>**/LICENSE</exclude>
+                            <exclude>**/README.md</exclude>
+                            <exclude>src/test/resources/**</exclude>
+                            <exclude>src/main/resources/**</exclude>
+                        </excludes>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>check-license</id>
+                            <phase>verify</phase>
+                            <goals><goal>check</goal></goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- Echo -->
+                <plugin>
+                    <groupId>com.soebes.maven.plugins</groupId>
+                    <artifactId>echo-maven-plugin</artifactId>
+                    <version>${echo-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <phase>install</phase>
+                            <goals><goal>echo</goal></goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- Surefire -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven-surefire-plugin.version}</version>
+                    <configuration>
+                        <!-- Sets the VM argument line used when unit tests are run. -->
+                        <argLine>-Xms256m -Xmx1G -XX:PermSize=256m -XX:MaxPermSize=512m ${surefire.argline}</argLine>
+                        <!-- Skip unit tests if asked -->
+                        <skipTests>${surefire.skipTests}</skipTests>
+                        <!-- Excludes integration tests when unit tests are run. -->
+                        <excludes>
+                            <exclude>**/*IT.java</exclude>
+                            <exclude>**/*IntegrationTest.java</exclude>
+                            <exclude>**/*GWT*.java</exclude>
+                        </excludes>
+                        <!-- Save reports in particular directory -->
+                        <reportsDirectory>${sonar.surefire.reportsPath}</reportsDirectory>
+                    </configuration>
+                </plugin>
+                <!-- Failsafe -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>${maven-failsafe-plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <!-- Plugins -->
+        <plugins>
+            <!-- Clean -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+            </plugin>
+            <!-- Compiler -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <!-- Install -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+            </plugin>
+            <!-- Enforcer -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+            </plugin>
+            <!-- License -->
+            <plugin>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+
+    <!-- Profiles -->
+    <profiles>
+
+        <!-- SonarQube -->
+        <profile>
+            <id>SonarQube</id>
+
+            <!-- Dependencies -->
+            <dependencies>
+                <dependency>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>org.jacoco.agent</artifactId>
+                    <version>${jacoco-maven-plugin.version}</version>
+                    <classifier>runtime</classifier>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+
+            <!-- Build options -->
+            <build>
+                <!-- Plugins -->
+                <plugins>
+                    <!-- SonarQube -->
+                    <plugin>
+                        <groupId>org.sonarsource.scanner.maven</groupId>
+                        <artifactId>sonar-maven-plugin</artifactId>
+                        <version>${sonar-maven-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <phase>verify</phase>
+                                <goals><goal>sonar</goal></goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <!-- Jacoco -->
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>${jacoco-maven-plugin.version}</version>
+                        <executions>
+                            <!-- Unit tests configuration -->
+                            <execution>
+                                <id>pre-unit-test</id>
+                                <goals><goal>prepare-agent</goal></goals>
+                                <configuration>
+                                    <destFile>${jacoco.ut.execution.data.file}</destFile>
+                                    <propertyName>surefireArgLine</propertyName>
+                                    <append>true</append>
+                                </configuration>
+                            </execution>
+                            <!-- Ensures code coverage report for unit tests is created after unit tests have been run. -->
+                            <execution>
+                                <id>post-unit-test</id>
+                                <phase>test</phase>
+                                <goals><goal>report</goal></goals>
+                                <configuration>
+                                    <dataFile>${jacoco.ut.execution.data.file}</dataFile>
+                                    <outputDirectory>${jacoco.ut.summary}</outputDirectory>
+                                </configuration>
+                            </execution>
+                            <!-- Integration tests configuration -->
+                            <execution>
+                                <id>pre-integration-test</id>
+                                <phase>pre-integration-test</phase>
+                                <goals><goal>prepare-agent-integration</goal></goals>
+                                <configuration>
+                                    <destFile>${jacoco.it.execution.data.file}</destFile>
+                                    <propertyName>failsafeArgLine</propertyName>
+                                    <append>true</append>
+                                </configuration>
+                            </execution>
+                            <!-- Ensures code coverage report for integration tests is created after integration tests have been run. -->
+                            <execution>
+                                <id>post-integration-test</id>
+                                <phase>post-integration-test</phase>
+                                <goals><goal>report</goal></goals>
+                                <configuration>
+                                    <dataFile>${jacoco.it.execution.data.file}</dataFile>
+                                    <outputDirectory>${jacoco.it.summary}</outputDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <append>true</append>
+                        </configuration>
+                    </plugin>
+                    <!-- Surefire -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${maven-surefire-plugin.version}</version>
+                        <configuration>
+                            <!-- Sets the VM argument line used when unit tests are run. -->
+                            <argLine>-Xms256m -Xmx1G -XX:PermSize=256m -XX:MaxPermSize=512m ${surefire.argline}</argLine>
+                            <!-- Skip unit tests if asked -->
+                            <skipTests>${surefire.skipTests}</skipTests>
+                            <!-- Excludes integration tests when unit tests are run. -->
+                            <excludes>
+                                <exclude>**/*IT.java</exclude>
+                                <exclude>**/*IntegrationTest.java</exclude>
+                                <exclude>**/*GWT*.java</exclude>
+                            </excludes>
+                            <!-- Save reports in particular directory -->
+                            <reportsDirectory>${sonar.surefire.reportsPath}</reportsDirectory>
+                        </configuration>
+                    </plugin>
+                    <!-- Failsafe -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <version>${maven-failsafe-plugin.version}</version>
+                        <configuration>
+                            <!-- Sets the VM argument line used when integration tests are run. -->
+                            <argLine>-Xms256m -Xmx1G -XX:PermSize=256m -XX:MaxPermSize=512m ${failsafe.argline}</argLine>
+                            <!-- Skip integration tests if asked -->
+                            <skipTests>${failsafe.skipTests}</skipTests>
+                            <includes>
+                                <include>**/*IntegrationTest.java</include>
+                                <include>**/*IT.java</include>
+                            </includes>
+                            <!-- Excludes GWT crap -->
+                            <excludes>
+                                <exclude>**/*GWT*.java</exclude>
+                            </excludes>
+                            <!-- Save reports in particular directory -->
+                            <reportsDirectory>${sonar.failsafe.reportsPath}</reportsDirectory>
+                        </configuration>
+                        <!-- Only run failsafe when required -->
+                        <executions>
+                            <execution>
+                                <id>integration-tests</id>
+                                <goals>
+                                    <goal>integration-test</goal>
+                                    <goal>verify</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- Spigot/Bukit 1.8.3 -->
+        <profile>
+            <id>MC-1.8.3</id>
+            <properties>
+                <bukkit.current>${bukkit.1.8.3}</bukkit.current>
+            </properties>
+        </profile>
+
+        <!-- Spigot/Bukit 1.8.8 -->
+        <profile>
+            <id>MC-1.8.8</id>
+            <properties>
+                <bukkit.current>${bukkit.1.8.8}</bukkit.current>
+            </properties>
+        </profile>
+
+        <!-- Spigot/Bukit 1.9.4 -->
+        <profile>
+            <id>MC-1.9.4</id>
+            <properties>
+                <bukkit.current>${bukkit.1.9.4}</bukkit.current>
+            </properties>
+        </profile>
+
+        <!-- Spigot/Bukit 1.10.2 -->
+        <profile>
+            <id>MC-1.10.2</id>
+            <properties>
+                <bukkit.current>${bukkit.1.10.2}</bukkit.current>
+            </properties>
+        </profile>
+
+        <!-- Spigot/Bukit 1.11.2 -->
+        <profile>
+            <id>MC-1.11.2</id>
+            <properties>
+                <bukkit.current>${bukkit.1.11.2}</bukkit.current>
+            </properties>
+        </profile>
+
+        <!-- Spigot/Bukit 1.12.2 -->
+        <profile>
+            <id>MC-1.12.2</id>
+            <properties>
+                <bukkit.current>${bukkit.1.12.2}</bukkit.current>
+            </properties>
+        </profile>
+
+        <!-- Spigot/Bukit 1.13.2 -->
+        <profile>
+            <id>MC-1.13.2</id>
+            <properties>
+                <bukkit.current>${bukkit.1.13.2}</bukkit.current>
+            </properties>
+        </profile>
+
+        <!-- Spigot/Bukit 1.14.4 -->
+        <profile>
+            <id>MC-1.14.4</id>
+            <properties>
+                <bukkit.current>${bukkit.1.14.4}</bukkit.current>
+            </properties>
+        </profile>
+    </profiles>
+</project>
