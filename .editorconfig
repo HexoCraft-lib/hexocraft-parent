@@ -1,5 +1,5 @@
 #
-#    Copyright 2015 hexosse <hexosse@gmail.com>
+#    Copyright 2015-2020 hexosse <hexosse@gmail.com>
 #
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,13 +18,6 @@
 # Top-most EditorConfig file
 root = true
 
-# Unix-style newlines with a newline ending every file
 [*]
-end_of_line = lf
-insert_final_newline = true
-
-# Set the charset, and space indention
-[*.java]
 charset = utf-8
-indent_style = space
-indent_size = 4
+end_of_line = lf
