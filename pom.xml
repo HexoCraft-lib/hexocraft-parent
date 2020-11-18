@@ -31,7 +31,7 @@
     <!-- Description -->
     <name>Hexocraft Parent POM</name>
     <description>Hexocraft Parent POM provides common settings for all Hexocraft components.</description>
-    <url>https://github.com/hexocraft-lib/hexocraft-parent</url>
+    <url>https://github.com/hexocraft/hexocraft-parent</url>
 
     <!-- Organization -->
     <organization>
@@ -59,15 +59,15 @@
 
     <!-- Source control manager -->
     <scm>
-        <url>http://github.com/hexocraft-lib/hexocraft-parent</url>
-        <connection>scm:git:git://github.com/hexocraft-lib/hexocraft-parent.git</connection>
-        <developerConnection>scm:git:git@github.com:hexocraft-lib/hexocraft-parent.git</developerConnection>
+        <url>http://github.com/hexocraft/hexocraft-parent</url>
+        <connection>scm:git:git://github.com/hexocraft/hexocraft-parent.git</connection>
+        <developerConnection>scm:git:git@github.com:hexocraft/hexocraft-parent.git</developerConnection>
     </scm>
 
     <!-- Issue management -->
     <issueManagement>
         <system>GitHub</system>
-        <url>https://github.com/hexocraft-lib/hexocraft-parent/issues</url>
+        <url>https://github.com/hexocraft/hexocraft-parent/issues</url>
     </issueManagement>
 
     <!-- Jenkins server -->
@@ -701,7 +701,7 @@
                     <artifactId>license-maven-plugin</artifactId>
                     <version>${license-maven-plugin.version}</version>
                     <configuration>
-                        <header>https://raw.githubusercontent.com/hexocraft-lib/hexocraft-parent/master/LICENCE_HEADER</header>
+                        <header>https://raw.githubusercontent.com/hexocraft/hexocraft-parent/master/LICENCE_HEADER</header>
                         <aggregate>true</aggregate>
                         <properties>
                             <owner>${owner.name}</owner>
