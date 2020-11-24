@@ -25,7 +25,7 @@
     <!-- Artifact properties -->
     <groupId>com.github.hexocraft</groupId>
     <artifactId>hexocraft-parent</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1</version>
     <packaging>pom</packaging>
 
     <!-- Description -->
@@ -33,35 +33,36 @@
     <description>Hexocraft Parent POM provides common settings for all Hexocraft components.</description>
     <url>https://github.com/hexocraft/hexocraft-parent</url>
 
+    <!-- License -->
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <!-- Want to contibute? Anybody is welcome -->
+    <developers>
+        <developer>
+            <name>hexosse</name>
+            <email>hexosse@gmail.com</email>
+            <organization>HexoCraft</organization>
+            <organizationUrl>https://github.com/HexoCraft</organizationUrl>
+        </developer>
+    </developers>
+
     <!-- Organization -->
     <organization>
         <name>Hexocraft</name>
         <url>https://github.com/hexocraft</url>
     </organization>
 
-    <!-- Want to contibute? Anybody is welcome -->
-    <developers>
-        <developer>
-            <id>hexosse</id>
-            <name>hexosse</name>
-            <url>https://github.com/hexosse</url>
-        </developer>
-    </developers>
-
-    <!-- License -->
-    <licenses>
-        <license>
-            <name>Apache-2.0</name>
-            <url>https://www.opensource.org/licenses/Apache-2.0</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-
     <!-- Source control manager -->
     <scm>
-        <url>http://github.com/hexocraft/hexocraft-parent</url>
         <connection>scm:git:git://github.com/hexocraft/hexocraft-parent.git</connection>
-        <developerConnection>scm:git:git@github.com:hexocraft/hexocraft-parent.git</developerConnection>
+        <developerConnection>scm:git:ssh://github.com:hexocraft/hexocraft-parent.git</developerConnection>
+        <url>http://github.com/hexocraft/hexocraft-parent</url>
     </scm>
 
     <!-- Issue management -->
@@ -70,14 +71,21 @@
         <url>https://github.com/hexocraft/hexocraft-parent/issues</url>
     </issueManagement>
 
-    <!-- Jenkins server -->
-    <ciManagement>
-        <system>Jenkins</system>
-        <url>http://jenkins.hexocube.fr/job/hexocraft/job/hexocraft-parent</url>
-    </ciManagement>
+    <!-- deployment servers -->
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh-hexocraft</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh-hexocraft</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 
     <!-- Project properties -->
     <properties>
+
         <!-- Owner data -->
         <owner.name>hexosse</owner.name>
         <owner.email>hexosse@gmail.com</owner.email>
@@ -97,35 +105,10 @@
         <project.build.resourceEncoding>${project.encoding}</project.build.resourceEncoding>
         <project.reporting.outputEncoding>${project.encoding}</project.reporting.outputEncoding>
 
-        <!-- Bukkit versions -->
-        <bukkit.current>${bukkit.latest}</bukkit.current>
-        <bukkit.1.8.3>1.8.3-R0.1-SNAPSHOT</bukkit.1.8.3>
-        <bukkit.1.8.8>1.8.8-R0.1-SNAPSHOT</bukkit.1.8.8>
-        <bukkit.1.9.4>1.9.4-R0.1-SNAPSHOT</bukkit.1.9.4>
-        <bukkit.1.10.2>1.10.2-R0.1-SNAPSHOT</bukkit.1.10.2>
-        <bukkit.1.11.2>1.11.2-R0.1-SNAPSHOT</bukkit.1.11.2>
-        <bukkit.1.12.2>1.12.2-R0.1-SNAPSHOT</bukkit.1.12.2>
-        <bukkit.1.13.2>1.13.2-R0.1-SNAPSHOT</bukkit.1.13.2>
-        <bukkit.1.14.4>1.14.4-R0.1-SNAPSHOT</bukkit.1.14.4>
-        <bukkit.1.15.2>1.15.2-R0.1-SNAPSHOT</bukkit.1.15.2>
-        <bukkit.1.16.4>1.16.4-R0.1-SNAPSHOT</bukkit.1.16.4>
-        <bukkit.latest>${bukkit.1.16.4}</bukkit.latest>
-
-        <!-- Bukkit/Spigot common plugins dependencies -->
-        <vault.version>1.5.6</vault.version>
-
-        <!-- HexoCraft libs versions -->
-
-        <!-- External libs dependencies -->
-        <commands.version>0.5.0-SNAPSHOT</commands.version>                             <!-- https://github.com/aikar/commands -->
-        <configurate.version>3.7.2</configurate.version>                                <!-- https://github.com/SpongePowered/Configurate -->
+        <!-- Commonly used external libraries -->
         <gson.version>2.8.6</gson.version>                                              <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
         <guava.version>30.0-jre</guava.version>                                         <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
-        <kyori.adventure.version>4.0.0-SNAPSHOT</kyori.adventure.version>               <!-- https://github.com/KyoriPowered/adventure-platform -->
-        <kyori.event.version>4.0.0-SNAPSHOT</kyori.event.version>                       <!-- https://github.com/KyoriPowered/event -->
         <snakeyaml.version>1.27</snakeyaml.version>                                     <!-- https://bitbucket.org/asomov/snakeyaml/src/master/ -->
-        <taskchain.version>3.7.2</taskchain.version>                                    <!-- https://github.com/aikar/TaskChain -->
-
 
         <!-- Maven Plugins -->
         <git-commit-id-plugin.version>4.0.3</git-commit-id-plugin.version>              <!-- https://github.com/ktoso/maven-git-commit-id-plugin/blob/master/README.md -->
@@ -136,12 +119,14 @@
         <maven-dependency-plugin.version>3.1.2</maven-dependency-plugin.version>        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-dependency-plugin -->
         <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>             <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-deploy-plugin -->
         <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-enforcer-plugin -->
+        <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>                        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-gpg-plugin -->
         <maven-install-plugin.version>3.0.0-M1</maven-install-plugin.version>           <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-install-plugin -->
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>                      <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-jar-plugin -->
-        <maven-javadoc-plugin.version>3.2.4</maven-javadoc-plugin.version>              <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-javadoc-plugin -->
+        <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>              <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-javadoc-plugin -->
         <maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>                  <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-shade-plugin -->
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>                <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-source-plugin -->
         <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
+        <nexus-staging-plugin.version>1.6.8</nexus-staging-plugin.version>              <!-- https://mvnrepository.com/artifact/org.sonatype.plugins/nexus-staging-maven-plugin -->
         <proguard-maven-plugin.version>2.3.1</proguard-maven-plugin.version>            <!-- https://wvengen.github.io/proguard-maven-plugin -->
         <proguard-base.version>6.2.2</proguard-base.version>                            <!-- https://mvnrepository.com/artifact/net.sf.proguard/proguard-base -->
         <echo-maven-plugin.version>0.1.0</echo-maven-plugin.version>                    <!-- https://mvnrepository.com/artifact/com.soebes.maven.plugins/echo-maven-plugin -->
@@ -187,140 +172,9 @@
 
     </properties>
 
-    <!-- HexoCraft repository should have all needed artifacts to build HexoCraft libs and plugins -->
-    <repositories>
-       <repository>
-            <id>hexocraft-repo-release</id>
-            <url>http://repo.hexocube.fr/release</url>
-           <snapshots><enabled>false</enabled></snapshots>
-           <releases><enabled>true</enabled></releases>
-        </repository>
-        <repository>
-            <id>hexocraft-repo-snapshot</id>
-            <url>http://repo.hexocube.fr/snapshot</url>
-            <snapshots><enabled>true</enabled></snapshots>
-            <releases><enabled>false</enabled></releases>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>hexocraft-repo-release</id>
-            <url>http://repo.hexocube.fr/release</url>
-        </pluginRepository>
-        <pluginRepository>
-            <id>hexocraft-repo-snapshot</id>
-            <snapshots />
-            <url>http://repo.hexocube.fr/snapshot</url>
-        </pluginRepository>
-    </pluginRepositories>
-
-    <!-- HexoCraft repository server -->
-    <distributionManagement>
-        <repository>
-            <id>hexocraft-releases</id>
-            <url>http://repo.hexocube.fr/release-local</url>
-        </repository>
-        <snapshotRepository>
-            <id>hexocraft-snapshots</id>
-            <url>http://repo.hexocube.fr/snapshot-local</url>
-        </snapshotRepository>
-    </distributionManagement>
-
-    <!-- Project and subproject dependencies -->
+    <!-- Project and sub-project dependencies -->
     <dependencyManagement>
         <dependencies>
-            <!-- ********** Bukkit / Spigot ********** -->
-            <!-- Bukkit -->
-            <dependency>
-                <groupId>org.bukkit</groupId>
-                <artifactId>bukkit</artifactId>
-                <version>${bukkit.current}</version>
-                <scope>provided</scope>
-            </dependency>
-            <!-- Craftbukkit -->
-            <dependency>
-                <groupId>org.bukkit</groupId>
-                <artifactId>craftbukkit</artifactId>
-                <version>${bukkit.current}</version>
-                <scope>provided</scope>
-            </dependency>
-            <!-- Spigot-API -->
-            <dependency>
-                <groupId>org.spigotmc</groupId>
-                <artifactId>spigot-api</artifactId>
-                <version>${bukkit.current}</version>
-                <scope>provided</scope>
-            </dependency>
-            <!-- Spigot -->
-            <dependency>
-                <groupId>org.spigotmc</groupId>
-                <artifactId>spigot</artifactId>
-                <version>${bukkit.current}</version>
-                <scope>provided</scope>
-            </dependency>
-
-            <!-- ********** HexoCraft libs ********** -->
-
-            <!-- ********** External libs ********** -->
-            <!-- Commands : https://github.com/aikar/commands-->
-            <dependency>
-                <groupId>co.aikar</groupId>
-                <artifactId>acf-core</artifactId>
-                <version>${commands.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>co.aikar</groupId>
-                <artifactId>acf-bukkit</artifactId>
-                <version>${commands.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>co.aikar</groupId>
-                <artifactId>acf-paper</artifactId>
-                <version>${commands.version}</version>
-            </dependency>
-            <!-- configurate : https://github.com/SpongePowered/Configurate -->
-            <dependency>
-                <groupId>org.spongepowered</groupId>
-                <artifactId>configurate-core</artifactId>
-                <version>${configurate.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>com.google.guava</groupId>
-                        <artifactId>guava</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.checkerframework</groupId>
-                        <artifactId>checker-qual</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.spongepowered</groupId>
-                <artifactId>configurate-gson</artifactId>
-                <version>${configurate.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>com.google.code.gson</groupId>
-                        <artifactId>gson</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.spongepowered</groupId>
-                <artifactId>configurate-hocon</artifactId>
-                <version>${configurate.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.spongepowered</groupId>
-                <artifactId>configurate-yaml</artifactId>
-                <version>${configurate.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.yaml</groupId>
-                        <artifactId>snakeyaml</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
             <!-- Gson : https://mvnrepository.com/artifact/com.google.code.gson/gson-->
             <dependency>
                 <groupId>com.google.code.gson</groupId>
@@ -333,48 +187,14 @@
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
             </dependency>
-            <!-- kyori adventure-platform -->
-            <dependency>
-                <groupId>net.kyori</groupId>
-                <artifactId>adventure-platform-bukkit</artifactId>
-                <version>${kyori.adventure.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.checkerframework</groupId>
-                        <artifactId>checker-qual</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <!-- kyori event -->
-            <dependency>
-                <groupId>net.kyori</groupId>
-                <artifactId>event-api</artifactId>
-                <version>${kyori.event.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>com.google.guava</groupId>
-                        <artifactId>guava</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.checkerframework</groupId>
-                        <artifactId>checker-qual</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
             <!-- SnakeYAML : https://bitbucket.org/asomov/snakeyaml/src/master/ -->
             <dependency>
                 <groupId>org.yaml</groupId>
                 <artifactId>snakeyaml</artifactId>
                 <version>${snakeyaml.version}</version>
             </dependency>
-            <!-- Taskchain : https://github.com/aikar/TaskChain -->
-            <dependency>
-                <groupId>co.aikar</groupId>
-                <artifactId>taskchain-bukkit</artifactId>
-                <version>${taskchain.version}</version>
-            </dependency>
 
-            <!-- ********** Privacy ********** -->
+            <!-- ********** Obfuscator ********** -->
             <!-- Proguard -->
             <dependency>
                 <groupId>net.sf.proguard</groupId>
@@ -383,7 +203,7 @@
                 <scope>runtime</scope>
             </dependency>
 
-            <!-- ********** JUnit ********** -->
+            <!-- ********** Testing framework ********** -->
             <!-- JUnit 5 -->
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
@@ -405,7 +225,7 @@
                 <scope>test</scope>
             </dependency>
 
-            <!-- ********** CheckerFramework ********** -->
+            <!-- ********** Checker Framework ********** -->
             <dependency>
                 <groupId>org.checkerframework</groupId>
                 <artifactId>checker-qual</artifactId>
@@ -531,7 +351,7 @@
                     <executions>
                         <execution>
                             <id>attach-sources</id>
-                            <goals><goal>jar</goal></goals>
+                            <goals><goal>jar-no-fork</goal></goals>
                         </execution>
                     </executions>
                     <configuration>
@@ -602,6 +422,19 @@
                             </manifestEntries>
                         </archive>
                     </configuration>
+                </plugin>
+                <!-- gpg -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>${maven-gpg-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>sign-artifacts</id>
+                            <phase>verify</phase>
+                            <goals><goal>sign</goal></goals>
+                        </execution>
+                    </executions>
                 </plugin>
                 <!-- Shade -->
                 <plugin>
@@ -695,6 +528,18 @@
                     <artifactId>maven-deploy-plugin</artifactId>
                     <version>${maven-deploy-plugin.version}</version>
                 </plugin>
+                <!-- Nexus staging -->
+                <plugin>
+                    <groupId>org.sonatype.plugins</groupId>
+                    <artifactId>nexus-staging-maven-plugin</artifactId>
+                    <version>${nexus-staging-plugin.version}</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <serverId>ossrh-hexocraft</serverId>
+                        <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                        <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                    </configuration>
+                </plugin>
                 <!-- License -->
                 <plugin>
                     <groupId>com.mycila</groupId>
@@ -777,6 +622,11 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
+            <!-- Dependency -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+            </plugin>
             <!-- Install -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -797,6 +647,38 @@
 
     <!-- Profiles -->
     <profiles>
+
+        <!-- OSSRH Deploy -->
+        <profile>
+            <id>ossrh-deploy</id>
+
+            <!-- Build options -->
+            <build>
+                <plugins>
+                    <!-- Source -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                    </plugin>
+                    <!-- Javadoc -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                    </plugin>
+                    <!-- Nexus staging -->
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                    </plugin>
+                    <!-- gpg -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+
+        </profile>
 
         <!-- CheckerFramework -->
         <profile>
@@ -1013,193 +895,6 @@
                     </plugin>
                 </plugins>
             </build>
-        </profile>
-
-        <!-- Spigot/Bukit 1.8.3 -->
-        <profile>
-            <id>MC-1.8.3</id>
-            <properties>
-                <bukkit.current>${bukkit.1.8.3}</bukkit.current>
-            </properties>
-        </profile>
-
-        <!-- Spigot/Bukit 1.8.8 -->
-        <profile>
-            <id>MC-1.8.8</id>
-            <properties>
-                <bukkit.current>${bukkit.1.8.8}</bukkit.current>
-            </properties>
-        </profile>
-
-        <!-- Spigot/Bukit 1.9.4 -->
-        <profile>
-            <id>MC-1.9.4</id>
-            <properties>
-                <bukkit.current>${bukkit.1.9.4}</bukkit.current>
-            </properties>
-        </profile>
-
-        <!-- Spigot/Bukit 1.10.2 -->
-        <profile>
-            <id>MC-1.10.2</id>
-            <properties>
-                <bukkit.current>${bukkit.1.10.2}</bukkit.current>
-            </properties>
-        </profile>
-
-        <!-- Spigot/Bukit 1.11.2 -->
-        <profile>
-            <id>MC-1.11.2</id>
-            <properties>
-                <bukkit.current>${bukkit.1.11.2}</bukkit.current>
-            </properties>
-        </profile>
-
-        <!-- Spigot/Bukit 1.12.2 -->
-        <profile>
-            <id>MC-1.12.2</id>
-            <properties>
-                <bukkit.current>${bukkit.1.12.2}</bukkit.current>
-            </properties>
-        </profile>
-
-        <!-- Spigot/Bukit 1.13.2 -->
-        <profile>
-            <id>MC-1.13.2</id>
-            <properties>
-                <bukkit.current>${bukkit.1.13.2}</bukkit.current>
-            </properties>
-        </profile>
-
-        <!-- Spigot/Bukit 1.14.4 -->
-        <profile>
-            <id>MC-1.14.4</id>
-            <properties>
-                <bukkit.current>${bukkit.1.14.4}</bukkit.current>
-            </properties>
-        </profile>
-
-        <!-- Spigot/Bukit 1.15.2 -->
-        <profile>
-            <id>MC-1.15.2</id>
-            <properties>
-                <bukkit.current>${bukkit.1.15.2}</bukkit.current>
-            </properties>
-        </profile>
-
-        <!-- Spigot/Bukit 1.16.4 -->
-        <profile>
-            <id>MC-1.16.4</id>
-            <properties>
-                <bukkit.current>${bukkit.1.16.4}</bukkit.current>
-            </properties>
-        </profile>
-
-        <!-- This is an helper profile to check -->
-        <!-- if all dependencies are available -->
-        <profile>
-            <id>Dependencies</id>
-
-            <dependencies>
-                <!-- ********** External libs ********** -->
-                <!-- Commands : https://github.com/aikar/commands-->
-                <dependency>
-                    <groupId>co.aikar</groupId>
-                    <artifactId>acf-core</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>co.aikar</groupId>
-                    <artifactId>acf-bukkit</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>co.aikar</groupId>
-                    <artifactId>acf-paper</artifactId>
-                </dependency>
-                <!-- configurate : https://github.com/SpongePowered/Configurate -->
-                <dependency>
-                    <groupId>org.spongepowered</groupId>
-                    <artifactId>configurate-core</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>org.spongepowered</groupId>
-                    <artifactId>configurate-gson</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>org.spongepowered</groupId>
-                    <artifactId>configurate-hocon</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>org.spongepowered</groupId>
-                    <artifactId>configurate-yaml</artifactId>
-                </dependency>
-                <!-- Gson : https://mvnrepository.com/artifact/com.google.code.gson/gson-->
-                <dependency>
-                    <groupId>com.google.code.gson</groupId>
-                    <artifactId>gson</artifactId>
-                </dependency>
-                <!-- Guava : https://mvnrepository.com/artifact/com.google.guava/guava-->
-                <dependency>
-                    <groupId>com.google.guava</groupId>
-                    <artifactId>guava</artifactId>
-                </dependency>
-                <!-- kyori adventure-platform -->
-                <dependency>
-                    <groupId>net.kyori</groupId>
-                    <artifactId>adventure-platform-bukkit</artifactId>
-                </dependency>
-                <!-- kyori event -->
-                <dependency>
-                    <groupId>net.kyori</groupId>
-                    <artifactId>event-api</artifactId>
-                </dependency>
-                <!-- SnakeYAML : https://bitbucket.org/asomov/snakeyaml/src/master/ -->
-                <dependency>
-                    <groupId>org.yaml</groupId>
-                    <artifactId>snakeyaml</artifactId>
-                </dependency>
-                <!-- Taskchain : https://github.com/aikar/TaskChain -->
-                <dependency>
-                    <groupId>co.aikar</groupId>
-                    <artifactId>taskchain-bukkit</artifactId>
-                </dependency>
-
-                <!-- ********** Privacy ********** -->
-                <!-- Proguard -->
-                <dependency>
-                    <groupId>net.sf.proguard</groupId>
-                    <artifactId>proguard-base</artifactId>
-                </dependency>
-
-                <!-- ********** JUnit ********** -->
-                <!-- JUnit 5 -->
-                <dependency>
-                    <groupId>org.junit.jupiter</groupId>
-                    <artifactId>junit-jupiter-engine</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>org.junit.platform</groupId>
-                    <artifactId>junit-platform-launcher</artifactId>
-                </dependency>
-                <!-- Mockito -->
-                <dependency>
-                    <groupId>org.mockito</groupId>
-                    <artifactId>mockito-junit-jupiter</artifactId>
-                </dependency>
-
-                <!-- ********** CheckerFramework ********** -->
-                <dependency>
-                    <groupId>org.checkerframework</groupId>
-                    <artifactId>checker-qual</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>org.checkerframework</groupId>
-                    <artifactId>checker</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>org.checkerframework</groupId>
-                    <artifactId>${checker.framework.jdk}</artifactId>
-                </dependency>
-            </dependencies>
         </profile>
     </profiles>
 </project>
