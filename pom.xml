@@ -25,7 +25,7 @@
     <!-- Artifact properties -->
     <groupId>com.github.hexocraft</groupId>
     <artifactId>hexocraft-parent</artifactId>
-    <version>1</version>
+    <version>2</version>
     <packaging>pom</packaging>
 
     <!-- Description -->
@@ -98,6 +98,9 @@
 
         <!-- Use recent version of maven -->
         <maven.version>3.6.1</maven.version>
+
+        <!-- licence -->
+        <inception.year>2015-2020</inception.year>
 
         <!-- Source code and resources must be encoded in UTF-8 -->
         <project.encoding>UTF-8</project.encoding>
@@ -551,7 +554,7 @@
                         <properties>
                             <owner>${owner.name}</owner>
                             <email>${owner.email}</email>
-                            <inceptionYear>2015-2020</inceptionYear>
+                            <inceptionYear>${inception.year}</inceptionYear>
                         </properties>
                         <excludes>
                             <exclude>**/LICENCE_HEADER</exclude>
