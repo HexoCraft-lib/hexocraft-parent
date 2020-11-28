@@ -142,9 +142,13 @@
         <mockito-junit-jupiter.version>3.6.0</mockito-junit-jupiter.version>            <!-- https://mvnrepository.com/artifact/org.mockito/mockito-junit-jupiter -->
 
         <!-- Checkerframework: Global settings -->
+        <!-- https://checkerframework.org/manual/#maven -->
         <checker.framework.version>3.7.1</checker.framework.version>                     <!-- https://mvnrepository.com/artifact/org.checkerframework/checker  https://mvnrepository.com/artifact/org.checkerframework/checker-qual -->
-        <checker.framework.jdk.version>3.3.0</checker.framework.jdk.version>             <!-- https://mvnrepository.com/artifact/org.checkerframework/jdk8 -->
-        <checker.framework.jdk>jdk${jdk.version.number}</checker.framework.jdk>
+        <checker.annotatedJdk.version>3.3.0</checker.annotatedJdk.version>               <!-- https://mvnrepository.com/artifact/org.checkerframework/jdk8 -->
+        <javac.version>9+181-r4173-1</javac.version>
+        <!-- These properties will be set by the Maven Dependency plugin -->
+        <annotatedJdk>${org.checkerframework:jdk8:jar}</annotatedJdk>
+        <errorProneJavac>${com.google.errorprone:javac:jar}</errorProneJavac>
 
         <!-- failsafe: Global settings -->
         <maven-failsafe-plugin.version>3.0.0-M5</maven-failsafe-plugin.version>         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-failsafe-plugin -->
@@ -229,23 +233,26 @@
             </dependency>
 
             <!-- ********** Checker Framework ********** -->
-            <dependency>
-                <groupId>org.checkerframework</groupId>
-                <artifactId>checker-qual</artifactId>
-                <version>${checker.framework.version}</version>
-                <scope>provided</scope>
-            </dependency>
+            <!-- https://checkerframework.org/manual/#maven -->
             <dependency>
                 <groupId>org.checkerframework</groupId>
                 <artifactId>checker</artifactId>
                 <version>${checker.framework.version}</version>
-                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.checkerframework</groupId>
-                <artifactId>${checker.framework.jdk}</artifactId>
-                <version>${checker.framework.jdk.version}</version>
-                <scope>provided</scope>
+                <artifactId>checker-qual</artifactId>
+                <version>${checker.framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.checkerframework</groupId>
+                <artifactId>jdk8</artifactId>
+                <version>${checker.annotatedJdk.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.errorprone</groupId>
+                <artifactId>javac</artifactId>
+                <version>${javac.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -318,6 +325,7 @@
                 </plugin>
                 <!-- Dependency -->
                 <plugin>
+                    <!-- This plugin will set properties values using dependency information -->
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-dependency-plugin</artifactId>
                     <version>${maven-dependency-plugin.version}</version>
@@ -692,17 +700,22 @@
                 <dependency>
                     <groupId>org.checkerframework</groupId>
                     <artifactId>checker</artifactId>
-                    <scope>provided</scope>
+                    <version>${checker.framework.version}</version>
                 </dependency>
                 <dependency>
                     <groupId>org.checkerframework</groupId>
                     <artifactId>checker-qual</artifactId>
-                    <scope>provided</scope>
+                    <version>${checker.framework.version}</version>
                 </dependency>
                 <dependency>
                     <groupId>org.checkerframework</groupId>
-                    <artifactId>${checker.framework.jdk}</artifactId>
-                    <scope>provided</scope>
+                    <artifactId>jdk8</artifactId>
+                    <version>${checker.annotatedJdk.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>com.google.errorprone</groupId>
+                    <artifactId>javac</artifactId>
+                    <version>${javac.version}</version>
                 </dependency>
             </dependencies>
 
@@ -715,6 +728,8 @@
                         <artifactId>maven-compiler-plugin</artifactId>
                         <version>${maven-compiler-plugin.version}</version>
                         <configuration>
+                            <!-- Must fork or else JVM arguments are ignored. -->
+                            <fork>true</fork>
                             <!-- Force source and target -->
                             <source>${jdk.version}</source>
                             <target>${jdk.version}</target>
@@ -735,24 +750,26 @@
                             <!-- Processors -->
                             <annotationProcessors>
                                 <!-- Add all the checkers to enable here -->
-                                <annotationProcessor>org.checkerframework.checker.fenum.FenumChecker</annotationProcessor>
-                                <annotationProcessor>org.checkerframework.checker.formatter.FormatterChecker</annotationProcessor>
-                                <annotationProcessor>org.checkerframework.checker.lock.LockChecker</annotationProcessor>
+                                <!--<annotationProcessor>org.checkerframework.checker.fenum.FenumChecker</annotationProcessor>-->
+                                <!--<annotationProcessor>org.checkerframework.checker.formatter.FormatterChecker</annotationProcessor>-->
+                                <!--<annotationProcessor>org.checkerframework.checker.lock.LockChecker</annotationProcessor>-->
                                 <annotationProcessor>org.checkerframework.checker.nullness.NullnessChecker</annotationProcessor>
-                                <annotationProcessor>org.checkerframework.checker.optional.OptionalChecker</annotationProcessor>
-                                <annotationProcessor>org.checkerframework.checker.regex.RegexChecker</annotationProcessor>
-                                <annotationProcessor>org.checkerframework.checker.signature.SignatureChecker</annotationProcessor>
-                                <annotationProcessor>org.checkerframework.checker.signedness.SignednessChecker</annotationProcessor>
+                                <!--<annotationProcessor>org.checkerframework.checker.optional.OptionalChecker</annotationProcessor>-->
+                                <!--<annotationProcessor>org.checkerframework.checker.regex.RegexChecker</annotationProcessor>-->
+                                <!--<annotationProcessor>org.checkerframework.checker.signature.SignatureChecker</annotationProcessor>-->
+                                <!--<annotationProcessor>org.checkerframework.checker.signedness.SignednessChecker</annotationProcessor>-->
                             </annotationProcessors>
+<!--                            <compilerArgs combine.children="append">-->
                             <compilerArgs>
                                 <!-- location of the annotated JDK, which comes from a Maven dependency -->
-                                <arg>-Xbootclasspath/p:org.checkerframework:${checker.framework.jdk}:jar</arg>
+                                <arg>-Xbootclasspath/p:${annotatedJdk}</arg>
+                                <arg>-J-Xbootclasspath/p:${errorProneJavac}</arg>
                                 <!-- Print a stack trace whenever an internal Checker Framework error occurs-->
-                                <arg>-AprintErrorStack</arg>
+                                <!--<arg>-AprintErrorStack</arg>-->
                                 <!-- Turns checker errors into warnings -->
-                                <arg>-Awarns</arg>
+                                <!--<arg>-Awarns</arg>-->
                                 <!-- Enables or disables optional checks-->
-                                <arg>-Alint</arg>
+                                <!--<arg>-Alint</arg>-->
                             </compilerArgs>
                         </configuration>
                     </plugin>
