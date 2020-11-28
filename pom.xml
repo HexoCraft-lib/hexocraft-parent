@@ -474,19 +474,18 @@
                         </execution>
                     </executions>
                     <configuration>
+                        <prefix>git</prefix>
                         <verbose>false</verbose>
                         <failOnNoGitDirectory>true</failOnNoGitDirectory>
                         <failOnUnableToExtractRepoInfo>false</failOnUnableToExtractRepoInfo>
                         <useNativeGit>true</useNativeGit>
                         <skipPoms>true</skipPoms>
-                        <runOnlyOnce>true</runOnlyOnce>
-                        <injectAllReactorProjects>true</injectAllReactorProjects>
                         <generateGitPropertiesFile>true</generateGitPropertiesFile>
                         <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
                         <format>json</format>
                         <gitDescribe>
                             <skip>false</skip>
-                            <always>false</always>
+                            <always>true</always>
                             <dirty>-dirty</dirty>
                         </gitDescribe>
                     </configuration>
@@ -652,6 +651,11 @@
             <plugin>
                 <groupId>com.mycila</groupId>
                 <artifactId>license-maven-plugin</artifactId>
+            </plugin>
+            <!-- Git commit id -->
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
