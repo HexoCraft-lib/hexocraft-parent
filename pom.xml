@@ -71,7 +71,7 @@
         <url>https://github.com/hexocraft/hexocraft-parent/issues</url>
     </issueManagement>
 
-    <!-- deployment servers -->
+    <!-- Deployment servers -->
     <distributionManagement>
         <snapshotRepository>
             <id>ossrh-hexocraft</id>
@@ -82,6 +82,25 @@
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
+
+    <!-- Repositories -->
+    <repositories>
+        <repository>
+            <id>maven-central</id>
+            <url>https://repo1.maven.org/maven2/</url>
+            <layout>default</layout>
+            <releases><enabled>true</enabled></releases>
+            <snapshots><enabled>false</enabled></snapshots>
+        </repository>
+        <repository>
+            <id>maven-snapshots</id>
+            <url>http://oss.sonatype.org/content/repositories/snapshots/</url>
+            <layout>default</layout>
+            <releases><enabled>false</enabled></releases>
+            <snapshots><enabled>true</enabled></snapshots>
+        </repository>
+    </repositories>
+
 
     <!-- Project properties -->
     <properties>
