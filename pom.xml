@@ -121,6 +121,9 @@
         <snakeyaml.version>1.27</snakeyaml.version>                                     <!-- https://bitbucket.org/asomov/snakeyaml/src/master/ -->
 
         <!-- Maven Plugins -->
+        <build-helper-maven-plugin.version>3.2.0</build-helper-maven-plugin.version>    <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/build-helper-maven-plugin -->
+        <buildnumber-maven-plugin.version>1.4</buildnumber-maven-plugin.version>        <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/buildnumber-maven-plugin -->
+        <echo-maven-plugin.version>0.4.0</echo-maven-plugin.version>                    <!-- https://mvnrepository.com/artifact/com.soebes.maven.plugins/echo-maven-plugin -->
         <git-commit-id-plugin.version>4.0.3</git-commit-id-plugin.version>              <!-- https://github.com/ktoso/maven-git-commit-id-plugin/blob/master/README.md -->
         <jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>                <!-- https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin -->
         <license-maven-plugin.version>3.0</license-maven-plugin.version>                <!-- https://mvnrepository.com/artifact/com.mycila/license-maven-plugin -->
@@ -139,9 +142,7 @@
         <nexus-staging-plugin.version>1.6.8</nexus-staging-plugin.version>              <!-- https://mvnrepository.com/artifact/org.sonatype.plugins/nexus-staging-maven-plugin -->
         <proguard-maven-plugin.version>2.3.1</proguard-maven-plugin.version>            <!-- https://wvengen.github.io/proguard-maven-plugin -->
         <proguard-base.version>6.2.2</proguard-base.version>                            <!-- https://mvnrepository.com/artifact/net.sf.proguard/proguard-base -->
-        <echo-maven-plugin.version>0.4.0</echo-maven-plugin.version>                    <!-- https://mvnrepository.com/artifact/com.soebes.maven.plugins/echo-maven-plugin -->
-        <build-helper-maven-plugin.version>3.2.0</build-helper-maven-plugin.version>    <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/build-helper-maven-plugin -->
-        <buildnumber-maven-plugin.version>1.4</buildnumber-maven-plugin.version>        <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/buildnumber-maven-plugin -->
+        <versions-maven-plugin.version>2.8.1</versions-maven-plugin.version>            <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/versions-maven-plugin -->
 
         <!-- JUnit -->
         <junit.jupiter.version>5.7.0</junit.jupiter.version>                            <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
@@ -661,6 +662,12 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
                     <version>${maven-failsafe-plugin.version}</version>
+                </plugin>
+                <!-- Version -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>versions-maven-plugin</artifactId>
+                    <version>${versions-maven-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
