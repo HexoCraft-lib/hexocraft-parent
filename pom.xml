@@ -71,23 +71,6 @@
         <url>https://github.com/hexocraft/hexocraft-parent/issues</url>
     </issueManagement>
 
-    <!-- Deployment servers -->
-    <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh-hexocraft</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>ossrh-hexocraft</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-        <repository>
-            <id>github</id>
-            <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/sitture/env-config</url>
-        </repository>
-    </distributionManagement>
-
     <!-- Repositories -->
     <repositories>
         <repository>
@@ -612,12 +595,6 @@
                     <groupId>org.sonatype.plugins</groupId>
                     <artifactId>nexus-staging-maven-plugin</artifactId>
                     <version>${nexus-staging-plugin.version}</version>
-                    <extensions>true</extensions>
-                    <configuration>
-                        <serverId>ossrh-hexocraft</serverId>
-                        <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                        <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                    </configuration>
                 </plugin>
                 <!-- License -->
                 <plugin>
@@ -736,6 +713,18 @@
         <profile>
             <id>ossrh-deploy</id>
 
+            <!-- Deployment servers -->
+            <distributionManagement>
+                <repository>
+                    <id>ossrh</id>
+                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+                </repository>
+                <snapshotRepository>
+                    <id>ossrh</id>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+                </snapshotRepository>
+            </distributionManagement>
+
             <!-- Build options -->
             <build>
                 <plugins>
@@ -753,6 +742,12 @@
                     <plugin>
                         <groupId>org.sonatype.plugins</groupId>
                         <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>ossrh</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                        </configuration>
                     </plugin>
                     <!-- gpg -->
                     <plugin>
@@ -761,7 +756,41 @@
                     </plugin>
                 </plugins>
             </build>
+        </profile>
 
+        <!-- GitHub Deploy -->
+        <profile>
+            <id>github-deploy</id>
+
+            <!-- Deployment servers -->
+            <distributionManagement>
+                <repository>
+                    <id>github</id>
+                    <name>GitHub Packages</name>
+                    <url>https://maven.pkg.github.com/sitture/env-config</url>
+                </repository>
+            </distributionManagement>
+
+            <!-- Build options -->
+            <build>
+                <plugins>
+                    <!-- Source -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                    </plugin>
+                    <!-- Javadoc -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                    </plugin>
+                    <!-- gpg -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
 
         <!-- CheckerFramework -->
@@ -848,7 +877,6 @@
                     </plugin>
                 </plugins>
             </build>
-
         </profile>
 
         <!-- SonarQube -->
