@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2015-2020 hexosse <hexosse@gmail.com>
+       Copyright 2015-2021 hexosse <hexosse@gmail.com>
 
 
        Licensed under the Apache License, Version 2.0 (the "License");
@@ -89,7 +89,6 @@
         </repository>
     </repositories>
 
-
     <!-- Project properties -->
     <properties>
 
@@ -107,7 +106,7 @@
         <maven.version>3.6.1</maven.version>
 
         <!-- licence -->
-        <inception.year>2015-2020</inception.year>
+        <inception.year>2015-2021</inception.year>
 
         <!-- Source code and resources must be encoded in UTF-8 -->
         <project.encoding>UTF-8</project.encoding>
