@@ -25,7 +25,7 @@
     <!-- Artifact properties -->
     <groupId>com.github.hexocraft</groupId>
     <artifactId>hexocraft-parent</artifactId>
-    <version>4</version>
+    <version>5</version>
     <packaging>pom</packaging>
 
     <!-- Description -->
@@ -232,6 +232,12 @@
                 <groupId>org.spongepowered</groupId>
                 <artifactId>configurate-yaml</artifactId>
                 <version>${configurate.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.yaml</groupId>
+                        <artifactId>snakeyaml</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <!-- Gson : https://mvnrepository.com/artifact/com.google.code.gson/gson-->
             <dependency>
