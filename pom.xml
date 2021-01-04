@@ -451,7 +451,7 @@
                         <doctitle>${project.name} ${project.version} : ${project.description}</doctitle>
                         <windowtitle>${project.name} ${project.version}</windowtitle>
                         <packagesheader>${project.url}</packagesheader>
-                        <includeDependencySources>true</includeDependencySources>
+                        <includeDependencySources>false</includeDependencySources>
                         <archive>
                             <manifest>
                                 <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
