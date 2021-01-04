@@ -25,7 +25,7 @@
     <!-- Artifact properties -->
     <groupId>com.github.hexocraft</groupId>
     <artifactId>hexocraft-parent</artifactId>
-    <version>6</version>
+    <version>7</version>
     <packaging>pom</packaging>
 
     <!-- Description -->
