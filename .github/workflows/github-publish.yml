@@ -19,7 +19,7 @@ name: Github Publish
 
 on:
   release:
-    types: [created]
+    types: [created, published]
 
 jobs:
   deploy:
@@ -40,12 +40,18 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-maven-
 
-      - name: Release Maven package
-        uses: samuelmeuli/action-maven-publish@v1
+      - name: Import GPG key
+        uses: crazy-max/ghaction-import-gpg@v3
         with:
-          maven_profiles: ossrh-deploy
-          server_id: ossrh
-          gpg_private_key: ${{ secrets.gpg_private_key }}
-          gpg_passphrase: ${{ secrets.gpg_passphrase }}
-          nexus_username: ${{ secrets.nexus_username }}
-          nexus_password: ${{ secrets.nexus_password }}
+          gpg-private-key: ${{ secrets.gpg_private_key }}
+          passphrase: ${{ secrets.gpg_passphrase }}
+
+      - name: Publish GithHub package
+        run: |
+          echo "set pom.xml <version> to ${GITHUB_REF##*/}"
+          mvn -B versions:set -DnewVersion=${GITHUB_REF##*/}
+          echo "Deploy to github"
+          mvn -B -Pgithub-deploy deploy
+
+        env:
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

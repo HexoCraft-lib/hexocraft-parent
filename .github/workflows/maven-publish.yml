@@ -19,7 +19,7 @@ name: Maven publish
 
 on:
   release:
-    types: [created]
+    types: [created, published]
 
 jobs:
   deploy:
@@ -54,7 +54,7 @@ jobs:
           echo "set pom.xml <version> to ${GITHUB_REF##*/}"
           mvn -B versions:set -DnewVersion=${GITHUB_REF##*/}
           echo "Deploy to ossrh"
-          mvn -B -Possrh deploy
+          mvn -B -Possrh-deploy deploy
 
         env:
           NEXUS_USERNAME: ${{ secrets.nexus_username }}
