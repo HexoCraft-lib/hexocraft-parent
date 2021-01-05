@@ -25,7 +25,7 @@
     <!-- Artifact properties -->
     <groupId>com.github.hexocraft</groupId>
     <artifactId>hexocraft-parent</artifactId>
-    <version>8</version>
+    <version>9</version>
     <packaging>pom</packaging>
 
     <!-- Description -->
@@ -864,15 +864,15 @@
                             <outputDirectory>${jacoco.report}</outputDirectory>
                         </configuration>
                     </execution>
-                    <execution>
-                        <!-- Aggregate when working with multi modules. -->
-                        <id>report-aggregate</id>
-                        <phase>verify</phase>
-                        <goals><goal>report-aggregate</goal></goals>
-                        <configuration>
-                            <outputDirectory>${jacoco.report}</outputDirectory>
-                        </configuration>
-                    </execution>
+                    <!--<execution>-->
+                    <!--    &lt;!&ndash; Aggregate when working with multi modules. &ndash;&gt;-->
+                    <!--    <id>report-aggregate</id>-->
+                    <!--    <phase>verify</phase>-->
+                    <!--    <goals><goal>report-aggregate</goal></goals>-->
+                    <!--    <configuration>-->
+                    <!--        <outputDirectory>${jacoco.report}</outputDirectory>-->
+                    <!--    </configuration>-->
+                    <!--</execution>-->
                 </executions>
             </plugin>
         </plugins>
