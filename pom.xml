@@ -25,7 +25,7 @@
     <!-- Artifact properties -->
     <groupId>com.github.hexocraft</groupId>
     <artifactId>hexocraft-parent</artifactId>
-    <version>7</version>
+    <version>8</version>
     <packaging>pom</packaging>
 
     <!-- Description -->
@@ -132,6 +132,7 @@
         <maven-dependency-plugin.version>3.1.2</maven-dependency-plugin.version>        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-dependency-plugin -->
         <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>             <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-deploy-plugin -->
         <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-enforcer-plugin -->
+        <maven-failsafe-plugin.version>3.0.0-M5</maven-failsafe-plugin.version>         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-failsafe-plugin -->
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>                        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-gpg-plugin -->
         <maven-install-plugin.version>3.0.0-M1</maven-install-plugin.version>           <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-install-plugin -->
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>                      <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-jar-plugin -->
@@ -142,48 +143,49 @@
         <nexus-staging-plugin.version>1.6.8</nexus-staging-plugin.version>              <!-- https://mvnrepository.com/artifact/org.sonatype.plugins/nexus-staging-maven-plugin -->
         <proguard-maven-plugin.version>2.3.1</proguard-maven-plugin.version>            <!-- https://wvengen.github.io/proguard-maven-plugin -->
         <proguard-base.version>6.2.2</proguard-base.version>                            <!-- https://mvnrepository.com/artifact/net.sf.proguard/proguard-base -->
+        <sonar-maven-plugin.version>3.7.0.1746</sonar-maven-plugin.version>             <!-- https://mvnrepository.com/artifact/org.sonarsource.scanner.maven/sonar-maven-plugin -->
         <versions-maven-plugin.version>2.8.1</versions-maven-plugin.version>            <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/versions-maven-plugin -->
-
-        <!-- JUnit -->
-        <junit.jupiter.version>5.7.0</junit.jupiter.version>                            <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
-        <junit.platform.version>1.7.0</junit.platform.version>                          <!-- https://mvnrepository.com/artifact/org.junit.platform/junit-platform-surefire-provider -->
-        <mockito-junit-jupiter.version>3.6.28</mockito-junit-jupiter.version>           <!-- https://mvnrepository.com/artifact/org.mockito/mockito-junit-jupiter -->
 
         <!-- Checkerframework: Global settings -->
         <!-- https://checkerframework.org/manual/#maven -->
-        <checker.framework.version>3.8.0</checker.framework.version>                     <!-- https://mvnrepository.com/artifact/org.checkerframework/checker  https://mvnrepository.com/artifact/org.checkerframework/checker-qual -->
+        <checker.framework.version>3.9.0</checker.framework.version>                     <!-- https://mvnrepository.com/artifact/org.checkerframework/checker  https://mvnrepository.com/artifact/org.checkerframework/checker-qual -->
         <checker.annotatedJdk.version>3.3.0</checker.annotatedJdk.version>               <!-- https://mvnrepository.com/artifact/org.checkerframework/jdk8 -->
         <javac.version>9+181-r4173-1</javac.version>
         <!-- These properties will be set by the Maven Dependency plugin -->
-        <annotatedJdk>${org.checkerframework:jdk8:jar}</annotatedJdk>
-        <errorProneJavac>${com.google.errorprone:javac:jar}</errorProneJavac>
+        <annotatedJdk>@{org.checkerframework:jdk8:jar}</annotatedJdk>
+        <errorProneJavac>@{com.google.errorprone:javac:jar}</errorProneJavac>
 
-        <!-- failsafe: Global settings -->
-        <maven-failsafe-plugin.version>3.0.0-M5</maven-failsafe-plugin.version>         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-failsafe-plugin -->
-        <failsafe.argline>''</failsafe.argline>
-        <failsafe.skipTests>false</failsafe.skipTests>
+        <!-- JUnit -->
+        <junit.jupiter.version>5.7.0</junit.jupiter.version>                            <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
+        <junit.platform.version>1.7.0</junit.platform.version>                          <!-- https://mvnrepository.com/artifact/org.junit.platform/junit-platform-launcher -->
+        <mockito-junit-jupiter.version>3.6.28</mockito-junit-jupiter.version>           <!-- https://mvnrepository.com/artifact/org.mockito/mockito-junit-jupiter -->
 
-        <!-- SonarQube: Global settings -->                                             <!-- https://docs.sonarqube.org/display/SONAR/Analysis+Parameters -->
-        <sonar-maven-plugin.version>3.7.0.1746</sonar-maven-plugin.version>             <!-- https://mvnrepository.com/artifact/org.sonarsource.scanner.maven/sonar-maven-plugin -->
+        <!-- Surefire configuration -->
+        <skip.unit.tests>false</skip.unit.tests>
+        <fail.if.no.unit.tests>false</fail.if.no.unit.tests>
+        <surefire.reportsPath>${basedir}/target/surefire-reports</surefire.reportsPath>
+
+        <!-- Failesafe configuration -->
+        <skip.integration.tests>false</skip.integration.tests>
+        <fail.if.no.integration.tests>false</fail.if.no.integration.tests>
+        <failsafe.reportsPath>${basedir}/target/failsafe-reports</failsafe.reportsPath>
+
+        <!-- Jacoco configuration -->
+        <jacoco.basedir>${basedir}/target/code-coverage</jacoco.basedir>
+        <jacoco.ut.data.file>${jacoco.basedir}/jacoco-ut.exec</jacoco.ut.data.file>
+        <jacoco.it.data.file>${jacoco.basedir}/jacoco-it.exec</jacoco.it.data.file>
+        <jacoco.merge.data.file>${jacoco.basedir}/jacoco-merge.exec</jacoco.merge.data.file>
+        <jacoco.ut.report>${jacoco.basedir}/jacoco-ut</jacoco.ut.report>
+        <jacoco.it.report>${jacoco.basedir}/jacoco-it</jacoco.it.report>
+        <jacoco.report>${jacoco.basedir}/jacoco</jacoco.report>
+
+        <!-- SonarQube configuration -->
         <sonar.host.url>http://sonarqube.hexocube.fr/</sonar.host.url>
         <sonar.projectKey>${project.artifactId}</sonar.projectKey>
         <sonar.language>java</sonar.language>
+        <sonar.java.source>${jdk.version}</sonar.java.source>
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
-        <sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
-        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>                     <!-- Don't let Sonar execute tests! Maven will run them and produce some reports for Sonar -->
-        <jacoco.lib.path>${settings.localRepository}/org/jacoco/org.jacoco.agent/${jacoco-maven-plugin.version}/org.jacoco.agent-${jacoco-maven-plugin.version}-runtime.jar</jacoco.lib.path>
-        <javaagent>${jacoco.lib.path}</javaagent>
-        <!-- SonarQube: Quality reports -->
-        <sonar.surefire.reportsPath>${project.reporting.outputDirectory}/surefire-reports</sonar.surefire.reportsPath>
-        <sonar.failsafe.reportsPath>${project.reporting.outputDirectory}/failsafe-reports</sonar.failsafe.reportsPath>
-        <jacoco.ut.summary>${project.reporting.outputDirectory}/jacoco-ut</jacoco.ut.summary>
-        <jacoco.it.summary>${project.reporting.outputDirectory}/jacoco-it</jacoco.it.summary>
-        <jacoco.ut.execution.data.file>${project.build.directory}/jacoco.exec</jacoco.ut.execution.data.file>
-        <jacoco.it.execution.data.file>${project.build.directory}/jacoco-it.exec</jacoco.it.execution.data.file>
-
-        <!-- surefire: Global settings -->
-        <surefire.argline>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</surefire.argline>
-        <surefire.skipTests>false</surefire.skipTests>
+        <sonar.coverage.jacoco.xmlReportPaths>${jacoco.report}/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 
     </properties>
 
@@ -255,28 +257,6 @@
                 <scope>runtime</scope>
             </dependency>
 
-            <!-- ********** Testing framework ********** -->
-            <!-- JUnit 5 -->
-            <dependency>
-                <groupId>org.junit.jupiter</groupId>
-                <artifactId>junit-jupiter-engine</artifactId>
-                <version>${junit.jupiter.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.junit.platform</groupId>
-                <artifactId>junit-platform-launcher</artifactId>
-                <version>${junit.platform.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <!-- Mockito -->
-            <dependency>
-                <groupId>org.mockito</groupId>
-                <artifactId>mockito-junit-jupiter</artifactId>
-                <version>${mockito-junit-jupiter.version}</version>
-                <scope>test</scope>
-            </dependency>
-
             <!-- ********** Checker Framework ********** -->
             <!-- https://checkerframework.org/manual/#maven -->
             <dependency>
@@ -301,6 +281,31 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <!-- Project dependencies -->
+    <dependencies>
+        <!-- ********** Testing framework ********** -->
+        <!-- JUnit 5 -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-launcher</artifactId>
+            <version>${junit.platform.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Mockito -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>${mockito-junit-jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
     <!-- Build options -->
     <build>
@@ -466,7 +471,7 @@
                         <archive>
                             <manifestEntries>
                                 <Built-By>${owner.name} - ${owner.email}</Built-By>
-                                <Revision>${git.commit.id.abbrev}</Revision>
+                                <Revision>@{git.commit.id.abbrev}</Revision>
                                 <Specification-Title>${project.name}</Specification-Title>
                                 <Specification-Version>${project.version}</Specification-Version>
                                 <Specification-Vendor>${project.organization.name}</Specification-Vendor>
@@ -637,32 +642,6 @@
                         </execution>
                     </executions>
                 </plugin>
-                <!-- Surefire -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>${maven-surefire-plugin.version}</version>
-                    <configuration>
-                        <!-- Sets the VM argument line used when unit tests are run. -->
-                        <argLine>-Xms256m -Xmx1G ${surefire.argline}</argLine>
-                        <!-- Skip unit tests if asked -->
-                        <skipTests>${surefire.skipTests}</skipTests>
-                        <!-- Excludes integration tests when unit tests are run. -->
-                        <excludes>
-                            <exclude>**/*IT.java</exclude>
-                            <exclude>**/*IntegrationTest.java</exclude>
-                            <exclude>**/*GWT*.java</exclude>
-                        </excludes>
-                        <!-- Save reports in particular directory -->
-                        <reportsDirectory>${sonar.surefire.reportsPath}</reportsDirectory>
-                    </configuration>
-                </plugin>
-                <!-- Failsafe -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>${maven-failsafe-plugin.version}</version>
-                </plugin>
                 <!-- Version -->
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
@@ -708,6 +687,193 @@
             <plugin>
                 <groupId>pl.project13.maven</groupId>
                 <artifactId>git-commit-id-plugin</artifactId>
+            </plugin>
+            <!-- Surefire : unit tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.junit.jupiter</groupId>
+                        <artifactId>junit-jupiter-engine</artifactId>
+                        <version>${junit.jupiter.version}</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <!-- Skip unit tests if asked -->
+                    <skipTests>${skip.unit.tests}</skipTests>
+                    <!-- Fail if no tests is present -->
+                    <failIfNoTests>${fail.if.no.unit.tests}</failIfNoTests>
+                    <!-- Sets the VM argument line used when unit tests are run. -->
+                    <!-- allow argLine to be modified by other plugins, e.g. jacoco -->
+                    <argLine>@{surefire.argLine} -Xms256m -Xmx1G</argLine>
+                    <!-- Includes unit tests. -->
+                    <includes>
+                        <include>**/*UT.java</include>
+                        <include>**/*MT.java</include>
+                        <include>**/*Test.java</include>
+                        <include>**/*UTest.java</include>
+                    </includes>
+                    <!-- Excludes integration tests. -->
+                    <excludes>
+                        <exclude>**/*IT.java</exclude>
+                        <exclude>**/*ITest.java</exclude>
+                        <exclude>**/*IntegrationTest.java</exclude>
+                    </excludes>
+                    <!-- Save reports in particular directory -->
+                    <reportsDirectory>${surefire.reportsPath}</reportsDirectory>
+                </configuration>
+                <executions>
+                    <!-- Surefire has only one goal : test -->
+                    <execution>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Failesafe : integration test -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${maven-failsafe-plugin.version}</version>
+                <configuration>
+                    <!-- Skip integration tests if asked -->
+                    <skipTests>${skip.integration.tests}</skipTests>
+                    <!-- Fail if no tests is present -->
+                    <failIfNoTests>${fail.if.no.integration.tests}</failIfNoTests>
+                    <!-- Sets the VM argument line used when integration tests are run. -->
+                    <!-- allow argLine to be modified by other plugins, e.g. jacoco -->
+                    <argLine>@{failsafe.argLine} -Xms256m -Xmx1G -XX:PermSize=256m -XX:MaxPermSize=512m</argLine>
+                    <!-- Includes integration tests. -->
+                    <includes>
+                        <include>**/*IT.java</include>
+                        <include>**/*ITest.java</include>
+                        <include>**/*IntegrationTest.java</include>
+                    </includes>
+                    <!-- Excludes unit tests. -->
+                    <excludes>
+                        <exclude>**/*UT.java</exclude>
+                        <exclude>**/*MT.java</exclude>
+                        <exclude>**/*Test.java</exclude>
+                        <exclude>**/*UTest.java</exclude>
+                    </excludes>
+                    <!-- Save reports in particular directory -->
+                    <reportsDirectory>${failsafe.reportsPath}</reportsDirectory>
+                </configuration>
+                <executions>
+                    <!-- Failsafe has four phases : pre-integration-test, integration-test, post-integration-test, verify  -->
+                    <!-- Failsafe has only two goals : integration-test, verify  -->
+                    <execution>
+                        <id>integration-tests</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Jacoco -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco-maven-plugin.version}</version>
+                <configuration>
+                    <!-- Append coverage data to the existing file -->
+                    <append>true</append>
+                    <excludes>
+                        <exclude>*MethodAccess</exclude>
+                    </excludes>
+                </configuration>
+                <executions>
+                    <!-- Jacoco has eleven goals : -->
+                    <!--    check, dump, help, instrument, merge, -->
+                    <!--    prepare-agent, prepare-agent-integration, -->
+                    <!--    report, report-aggregate, report-integration, restore-instrumented-classes  -->
+                    <execution>
+                        <!-- Unit tests configuration -->
+                        <id>pre-unit-tests</id>
+                        <goals><goal>prepare-agent</goal></goals>
+                        <configuration>
+                            <skip>${skip.unit.tests}</skip>
+                            <propertyName>surefire.argLine</propertyName>
+                            <destFile>${jacoco.ut.data.file}</destFile>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <!-- Ensures code coverage report for unit tests is created after unit tests have been run. -->
+                        <id>post-unit-tests</id>
+                        <phase>test</phase>
+                        <goals><goal>report</goal></goals>
+                        <configuration>
+                            <skip>${skip.unit.tests}</skip>
+                            <dataFile>${jacoco.ut.data.file}</dataFile>
+                            <outputDirectory>${jacoco.ut.report}</outputDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <!-- Integration tests configuration -->
+                        <id>pre-integration-tests</id>
+                        <phase>pre-integration-test</phase>
+                        <goals><goal>prepare-agent-integration</goal></goals>
+                        <configuration>
+                            <skip>${skip.integration.tests}</skip>
+                            <propertyName>failsafe.argLine</propertyName>
+                            <destFile>${jacoco.it.data.file}</destFile>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <!-- Ensures code coverage report for integration tests is created after integration tests have been run. -->
+                        <id>post-integration-tests</id>
+                        <phase>post-integration-test</phase>
+                        <goals><goal>report</goal></goals>
+                        <configuration>
+                            <skip>${skip.integration.tests}</skip>
+                            <dataFile>${jacoco.it.data.file}</dataFile>
+                            <outputDirectory>${jacoco.it.report}</outputDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <!-- Merge results from unit tests and integration tests  -->
+                        <id>merge-results</id>
+                        <phase>verify</phase>
+                        <goals><goal>merge</goal></goals>
+                        <configuration>
+                            <destFile>${jacoco.merge.data.file}</destFile>
+                            <fileSets>
+                                <fileSet>
+                                    <directory>${jacoco.basedir}</directory>
+                                    <includes>
+                                        <include>**/*.exec</include>
+                                    </includes>
+                                    <excludes>
+                                        <exclude>**/*merge.exec</exclude>
+                                    </excludes>
+                                </fileSet>
+                            </fileSets>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <!-- Ensures code coverage report is created after merge have been run. -->
+                        <id>post-merge-results</id>
+                        <phase>verify</phase>
+                        <goals><goal>report</goal></goals>
+                        <configuration>
+                            <dataFile>${jacoco.merge.data.file}</dataFile>
+                            <outputDirectory>${jacoco.report}</outputDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <!-- Aggregate when working with multi modules. -->
+                        <id>report-aggregate</id>
+                        <phase>verify</phase>
+                        <goals><goal>report-aggregate</goal></goals>
+                        <configuration>
+                            <outputDirectory>${jacoco.report}</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
@@ -808,22 +974,18 @@
                 <dependency>
                     <groupId>org.checkerframework</groupId>
                     <artifactId>checker</artifactId>
-                    <version>${checker.framework.version}</version>
                 </dependency>
                 <dependency>
                     <groupId>org.checkerframework</groupId>
                     <artifactId>checker-qual</artifactId>
-                    <version>${checker.framework.version}</version>
                 </dependency>
                 <dependency>
                     <groupId>org.checkerframework</groupId>
                     <artifactId>jdk8</artifactId>
-                    <version>${checker.annotatedJdk.version}</version>
                 </dependency>
                 <dependency>
                     <groupId>com.google.errorprone</groupId>
                     <artifactId>javac</artifactId>
-                    <version>${javac.version}</version>
                 </dependency>
             </dependencies>
 
@@ -834,7 +996,6 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-compiler-plugin</artifactId>
-                        <version>${maven-compiler-plugin.version}</version>
                         <configuration>
                             <!-- Must fork or else JVM arguments are ignored. -->
                             <fork>true</fork>
@@ -867,7 +1028,7 @@
                                 <!--<annotationProcessor>org.checkerframework.checker.signature.SignatureChecker</annotationProcessor>-->
                                 <!--<annotationProcessor>org.checkerframework.checker.signedness.SignednessChecker</annotationProcessor>-->
                             </annotationProcessors>
-<!--                            <compilerArgs combine.children="append">-->
+                            <!-- <compilerArgs combine.children="append">-->
                             <compilerArgs>
                                 <!-- location of the annotated JDK, which comes from a Maven dependency -->
                                 <arg>-Xbootclasspath/p:${annotatedJdk}</arg>
@@ -887,24 +1048,12 @@
 
         <!-- SonarQube -->
         <profile>
-            <id>SonarQube</id>
-
-            <!-- Dependencies -->
-            <dependencies>
-                <dependency>
-                    <groupId>org.jacoco</groupId>
-                    <artifactId>org.jacoco.agent</artifactId>
-                    <version>${jacoco-maven-plugin.version}</version>
-                    <classifier>runtime</classifier>
-                    <scope>test</scope>
-                </dependency>
-            </dependencies>
+            <id>sonarqube</id>
 
             <!-- Build options -->
             <build>
                 <!-- Plugins -->
                 <plugins>
-                    <!-- SonarQube -->
                     <plugin>
                         <groupId>org.sonarsource.scanner.maven</groupId>
                         <artifactId>sonar-maven-plugin</artifactId>
@@ -913,110 +1062,6 @@
                             <execution>
                                 <phase>verify</phase>
                                 <goals><goal>sonar</goal></goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <!-- Jacoco -->
-                    <plugin>
-                        <groupId>org.jacoco</groupId>
-                        <artifactId>jacoco-maven-plugin</artifactId>
-                        <version>${jacoco-maven-plugin.version}</version>
-                        <executions>
-                            <!-- Unit tests configuration -->
-                            <execution>
-                                <id>pre-unit-test</id>
-                                <goals><goal>prepare-agent</goal></goals>
-                                <configuration>
-                                    <destFile>${jacoco.ut.execution.data.file}</destFile>
-                                    <propertyName>surefireArgLine</propertyName>
-                                    <append>true</append>
-                                </configuration>
-                            </execution>
-                            <!-- Ensures code coverage report for unit tests is created after unit tests have been run. -->
-                            <execution>
-                                <id>post-unit-test</id>
-                                <phase>test</phase>
-                                <goals><goal>report</goal></goals>
-                                <configuration>
-                                    <dataFile>${jacoco.ut.execution.data.file}</dataFile>
-                                    <outputDirectory>${jacoco.ut.summary}</outputDirectory>
-                                </configuration>
-                            </execution>
-                            <!-- Integration tests configuration -->
-                            <execution>
-                                <id>pre-integration-test</id>
-                                <phase>pre-integration-test</phase>
-                                <goals><goal>prepare-agent-integration</goal></goals>
-                                <configuration>
-                                    <destFile>${jacoco.it.execution.data.file}</destFile>
-                                    <propertyName>failsafeArgLine</propertyName>
-                                    <append>true</append>
-                                </configuration>
-                            </execution>
-                            <!-- Ensures code coverage report for integration tests is created after integration tests have been run. -->
-                            <execution>
-                                <id>post-integration-test</id>
-                                <phase>post-integration-test</phase>
-                                <goals><goal>report</goal></goals>
-                                <configuration>
-                                    <dataFile>${jacoco.it.execution.data.file}</dataFile>
-                                    <outputDirectory>${jacoco.it.summary}</outputDirectory>
-                                </configuration>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <append>true</append>
-                        </configuration>
-                    </plugin>
-                    <!-- Surefire -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <version>${maven-surefire-plugin.version}</version>
-                        <configuration>
-                            <!-- Sets the VM argument line used when unit tests are run. -->
-                            <argLine>-Xms256m -Xmx1G -XX:PermSize=256m -XX:MaxPermSize=512m ${surefire.argline}</argLine>
-                            <!-- Skip unit tests if asked -->
-                            <skipTests>${surefire.skipTests}</skipTests>
-                            <!-- Excludes integration tests when unit tests are run. -->
-                            <excludes>
-                                <exclude>**/*IT.java</exclude>
-                                <exclude>**/*IntegrationTest.java</exclude>
-                                <exclude>**/*GWT*.java</exclude>
-                            </excludes>
-                            <!-- Save reports in particular directory -->
-                            <reportsDirectory>${sonar.surefire.reportsPath}</reportsDirectory>
-                        </configuration>
-                    </plugin>
-                    <!-- Failsafe -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-failsafe-plugin</artifactId>
-                        <version>${maven-failsafe-plugin.version}</version>
-                        <configuration>
-                            <!-- Sets the VM argument line used when integration tests are run. -->
-                            <argLine>-Xms256m -Xmx1G -XX:PermSize=256m -XX:MaxPermSize=512m ${failsafe.argline}</argLine>
-                            <!-- Skip integration tests if asked -->
-                            <skipTests>${failsafe.skipTests}</skipTests>
-                            <includes>
-                                <include>**/*IntegrationTest.java</include>
-                                <include>**/*IT.java</include>
-                            </includes>
-                            <!-- Excludes GWT crap -->
-                            <excludes>
-                                <exclude>**/*GWT*.java</exclude>
-                            </excludes>
-                            <!-- Save reports in particular directory -->
-                            <reportsDirectory>${sonar.failsafe.reportsPath}</reportsDirectory>
-                        </configuration>
-                        <!-- Only run failsafe when required -->
-                        <executions>
-                            <execution>
-                                <id>integration-tests</id>
-                                <goals>
-                                    <goal>integration-test</goal>
-                                    <goal>verify</goal>
-                                </goals>
                             </execution>
                         </executions>
                     </plugin>
