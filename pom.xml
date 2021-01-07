@@ -25,7 +25,7 @@
     <!-- Artifact properties -->
     <groupId>com.github.hexocraft</groupId>
     <artifactId>hexocraft-parent</artifactId>
-    <version>10</version>
+    <version>11</version>
     <packaging>pom</packaging>
 
     <!-- Description -->
@@ -461,13 +461,6 @@
                             <id>sign-artifacts</id>
                             <phase>verify</phase>
                             <goals><goal>sign</goal></goals>
-                            <configuration>
-                                <!-- Prevent `gpg` from using pinentry programs -->
-                                <gpgArguments>
-                                    <arg>--pinentry-mode</arg>
-                                    <arg>loopback</arg>
-                                </gpgArguments>
-                            </configuration>
                         </execution>
                     </executions>
                 </plugin>
