@@ -25,7 +25,7 @@
     <!-- Artifact properties -->
     <groupId>com.github.hexocraft</groupId>
     <artifactId>hexocraft-parent</artifactId>
-    <version>9</version>
+    <version>10</version>
     <packaging>pom</packaging>
 
     <!-- Description -->
@@ -137,6 +137,7 @@
         <maven-install-plugin.version>3.0.0-M1</maven-install-plugin.version>           <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-install-plugin -->
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>                      <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-jar-plugin -->
         <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>              <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-javadoc-plugin -->
+        <maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>          <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-resources-plugin -->
         <maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>                  <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-shade-plugin -->
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>                <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-source-plugin -->
         <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
@@ -163,21 +164,10 @@
         <!-- Surefire configuration -->
         <skip.unit.tests>false</skip.unit.tests>
         <fail.if.no.unit.tests>false</fail.if.no.unit.tests>
-        <surefire.reportsPath>${basedir}/target/surefire-reports</surefire.reportsPath>
 
         <!-- Failesafe configuration -->
         <skip.integration.tests>false</skip.integration.tests>
         <fail.if.no.integration.tests>false</fail.if.no.integration.tests>
-        <failsafe.reportsPath>${basedir}/target/failsafe-reports</failsafe.reportsPath>
-
-        <!-- Jacoco configuration -->
-        <jacoco.basedir>${basedir}/target/code-coverage</jacoco.basedir>
-        <jacoco.ut.data.file>${jacoco.basedir}/jacoco-ut.exec</jacoco.ut.data.file>
-        <jacoco.it.data.file>${jacoco.basedir}/jacoco-it.exec</jacoco.it.data.file>
-        <jacoco.merge.data.file>${jacoco.basedir}/jacoco-merge.exec</jacoco.merge.data.file>
-        <jacoco.ut.report>${jacoco.basedir}/jacoco-ut</jacoco.ut.report>
-        <jacoco.it.report>${jacoco.basedir}/jacoco-it</jacoco.it.report>
-        <jacoco.report>${jacoco.basedir}/jacoco</jacoco.report>
 
         <!-- SonarQube configuration -->
         <sonar.host.url>http://sonarqube.hexocube.fr/</sonar.host.url>
@@ -185,7 +175,6 @@
         <sonar.language>java</sonar.language>
         <sonar.java.source>${jdk.version}</sonar.java.source>
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
-        <sonar.coverage.jacoco.xmlReportPaths>${jacoco.report}/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 
     </properties>
 
@@ -346,6 +335,18 @@
         <!-- Plugin Management -->
         <pluginManagement>
             <plugins>
+                <!-- build-helper -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>${build-helper-maven-plugin.version}</version>
+                </plugin>
+                <!-- buildnumber -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>buildnumber-maven-plugin</artifactId>
+                    <version>${buildnumber-maven-plugin.version}</version>
+                </plugin>
                 <!-- Clean -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -385,6 +386,24 @@
                         </execution>
                     </executions>
                 </plugin>
+                <!-- Deploy -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>${maven-deploy-plugin.version}</version>
+                </plugin>
+                <!-- Echo -->
+                <plugin>
+                    <groupId>com.soebes.maven.plugins</groupId>
+                    <artifactId>echo-maven-plugin</artifactId>
+                    <version>${echo-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <phase>install</phase>
+                            <goals><goal>echo</goal></goals>
+                        </execution>
+                    </executions>
+                </plugin>
                 <!-- Enforcer -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -404,54 +423,59 @@
                         </execution>
                     </executions>
                 </plugin>
-                <!-- Source -->
+                <!-- Git commit id -->
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-source-plugin</artifactId>
-                    <version>${maven-source-plugin.version}</version>
+                    <groupId>pl.project13.maven</groupId>
+                    <artifactId>git-commit-id-plugin</artifactId>
+                    <version>${git-commit-id-plugin.version}</version>
                     <executions>
                         <execution>
-                            <id>attach-sources</id>
-                            <goals><goal>jar-no-fork</goal></goals>
+                            <phase>validate</phase>
+                            <goals><goal>revision</goal></goals>
                         </execution>
                     </executions>
                     <configuration>
-                        <archive>
-                            <manifest>
-                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-                                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-                            </manifest>
-                        </archive>
+                        <prefix>git</prefix>
+                        <verbose>false</verbose>
+                        <failOnNoGitDirectory>true</failOnNoGitDirectory>
+                        <failOnUnableToExtractRepoInfo>false</failOnUnableToExtractRepoInfo>
+                        <useNativeGit>true</useNativeGit>
+                        <skipPoms>true</skipPoms>
+                        <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                        <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
+                        <format>json</format>
+                        <gitDescribe>
+                            <skip>false</skip>
+                            <always>true</always>
+                            <dirty>-dirty</dirty>
+                        </gitDescribe>
                     </configuration>
                 </plugin>
-                <!-- Javadoc -->
+                <!-- gpg -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>${maven-javadoc-plugin.version}</version>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>${maven-gpg-plugin.version}</version>
                     <executions>
                         <execution>
-                            <id>attach-javadocs</id>
-                            <goals><goal>jar</goal></goals>
+                            <id>sign-artifacts</id>
+                            <phase>verify</phase>
+                            <goals><goal>sign</goal></goals>
+                            <configuration>
+                                <!-- Prevent `gpg` from using pinentry programs -->
+                                <gpgArguments>
+                                    <arg>--pinentry-mode</arg>
+                                    <arg>loopback</arg>
+                                </gpgArguments>
+                            </configuration>
                         </execution>
                     </executions>
-                    <configuration>
-                        <quiet>true</quiet>
-                        <source>${maven.compiler.source}</source>
-                        <encoding>${project.encoding}</encoding>
-                        <docencoding>${project.encoding}</docencoding>
-                        <author>true</author>
-                        <doctitle>${project.name} ${project.version} : ${project.description}</doctitle>
-                        <windowtitle>${project.name} ${project.version}</windowtitle>
-                        <packagesheader>${project.url}</packagesheader>
-                        <includeDependencySources>false</includeDependencySources>
-                        <archive>
-                            <manifest>
-                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-                                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-                            </manifest>
-                        </archive>
-                    </configuration>
+                </plugin>
+                <!-- Install -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>${maven-install-plugin.version}</version>
                 </plugin>
                 <!-- Jar -->
                 <plugin>
@@ -484,122 +508,34 @@
                         </archive>
                     </configuration>
                 </plugin>
-                <!-- gpg -->
+                <!-- Javadoc -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-gpg-plugin</artifactId>
-                    <version>${maven-gpg-plugin.version}</version>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>${maven-javadoc-plugin.version}</version>
                     <executions>
                         <execution>
-                            <id>sign-artifacts</id>
-                            <phase>verify</phase>
-                            <goals><goal>sign</goal></goals>
-                            <configuration>
-                                <!-- Prevent `gpg` from using pinentry programs -->
-                                <gpgArguments>
-                                    <arg>--pinentry-mode</arg>
-                                    <arg>loopback</arg>
-                                </gpgArguments>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-                <!-- Shade -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-shade-plugin</artifactId>
-                    <version>${maven-shade-plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <phase>package</phase>
-                            <goals><goal>shade</goal></goals>
-                            <configuration>
-                                <minimizeJar>true</minimizeJar>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-                <!-- Git commit id -->
-                <plugin>
-                    <groupId>pl.project13.maven</groupId>
-                    <artifactId>git-commit-id-plugin</artifactId>
-                    <version>${git-commit-id-plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <phase>validate</phase>
-                            <goals><goal>revision</goal></goals>
+                            <id>attach-javadocs</id>
+                            <goals><goal>jar</goal></goals>
                         </execution>
                     </executions>
                     <configuration>
-                        <prefix>git</prefix>
-                        <verbose>false</verbose>
-                        <failOnNoGitDirectory>true</failOnNoGitDirectory>
-                        <failOnUnableToExtractRepoInfo>false</failOnUnableToExtractRepoInfo>
-                        <useNativeGit>true</useNativeGit>
-                        <skipPoms>true</skipPoms>
-                        <generateGitPropertiesFile>true</generateGitPropertiesFile>
-                        <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
-                        <format>json</format>
-                        <gitDescribe>
-                            <skip>false</skip>
-                            <always>true</always>
-                            <dirty>-dirty</dirty>
-                        </gitDescribe>
+                        <quiet>true</quiet>
+                        <source>${maven.compiler.source}</source>
+                        <encoding>${project.encoding}</encoding>
+                        <docencoding>${project.encoding}</docencoding>
+                        <author>true</author>
+                        <doctitle>${project.name} ${project.version} : ${project.description}</doctitle>
+                        <windowtitle>${project.name} ${project.version}</windowtitle>
+                        <packagesheader>${project.url}</packagesheader>
+                        <includeDependencySources>false</includeDependencySources>
+                        <archive>
+                            <manifest>
+                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                            </manifest>
+                        </archive>
                     </configuration>
-                </plugin>
-                <!-- build-helper -->
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>${build-helper-maven-plugin.version}</version>
-                </plugin>
-                <!-- buildnumber -->
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>buildnumber-maven-plugin</artifactId>
-                    <version>${buildnumber-maven-plugin.version}</version>
-                </plugin>
-                <!-- ProGuard -->
-                <plugin>
-                    <groupId>com.github.wvengen</groupId>
-                    <artifactId>proguard-maven-plugin</artifactId>
-                    <version>${proguard-maven-plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <phase>package</phase>
-                            <goals><goal>proguard</goal></goals>
-                        </execution>
-                    </executions>
-                    <dependencies>
-                        <dependency>
-                            <groupId>net.sf.proguard</groupId>
-                            <artifactId>proguard-base</artifactId>
-                            <version>${proguard-base.version}</version>
-                            <scope>runtime</scope>
-                        </dependency>
-                    </dependencies>
-                    <configuration>
-                        <proguardVersion>${proguard-base.version}</proguardVersion>
-                        <proguardInclude>${basedir}/proguard.conf</proguardInclude>
-                    </configuration>
-                </plugin>
-                <!-- Install -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-install-plugin</artifactId>
-                    <version>${maven-install-plugin.version}</version>
-                </plugin>
-                <!-- Deploy -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-deploy-plugin</artifactId>
-                    <version>${maven-deploy-plugin.version}</version>
-                </plugin>
-                <!-- Nexus staging -->
-                <plugin>
-                    <groupId>org.sonatype.plugins</groupId>
-                    <artifactId>nexus-staging-maven-plugin</artifactId>
-                    <version>${nexus-staging-plugin.version}</version>
                 </plugin>
                 <!-- License -->
                 <plugin>
@@ -630,17 +566,84 @@
                         </execution>
                     </executions>
                 </plugin>
-                <!-- Echo -->
+                <!-- Nexus staging -->
                 <plugin>
-                    <groupId>com.soebes.maven.plugins</groupId>
-                    <artifactId>echo-maven-plugin</artifactId>
-                    <version>${echo-maven-plugin.version}</version>
+                    <groupId>org.sonatype.plugins</groupId>
+                    <artifactId>nexus-staging-maven-plugin</artifactId>
+                    <version>${nexus-staging-plugin.version}</version>
+                </plugin>
+                <!-- ProGuard -->
+                <plugin>
+                    <groupId>com.github.wvengen</groupId>
+                    <artifactId>proguard-maven-plugin</artifactId>
+                    <version>${proguard-maven-plugin.version}</version>
                     <executions>
                         <execution>
-                            <phase>install</phase>
-                            <goals><goal>echo</goal></goals>
+                            <phase>package</phase>
+                            <goals><goal>proguard</goal></goals>
                         </execution>
                     </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>net.sf.proguard</groupId>
+                            <artifactId>proguard-base</artifactId>
+                            <version>${proguard-base.version}</version>
+                            <scope>runtime</scope>
+                        </dependency>
+                    </dependencies>
+                    <configuration>
+                        <proguardVersion>${proguard-base.version}</proguardVersion>
+                        <proguardInclude>${basedir}/proguard.conf</proguardInclude>
+                    </configuration>
+                </plugin>
+                <!-- Resources -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${maven-resources-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>testResources</id>
+                            <goals>
+                                <goal>testResources</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- Shade -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>${maven-shade-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals><goal>shade</goal></goals>
+                            <configuration>
+                                <minimizeJar>true</minimizeJar>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- Source -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>${maven-source-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <goals><goal>jar-no-fork</goal></goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <archive>
+                            <manifest>
+                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                            </manifest>
+                        </archive>
+                    </configuration>
                 </plugin>
                 <!-- Version -->
                 <plugin>
@@ -668,26 +671,32 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
             </plugin>
-            <!-- Install -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-install-plugin</artifactId>
-            </plugin>
             <!-- Enforcer -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-            </plugin>
-            <!-- License -->
-            <plugin>
-                <groupId>com.mycila</groupId>
-                <artifactId>license-maven-plugin</artifactId>
             </plugin>
             <!-- Git commit id -->
             <plugin>
                 <groupId>pl.project13.maven</groupId>
                 <artifactId>git-commit-id-plugin</artifactId>
             </plugin>
+            <!-- Install -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+            </plugin>
+            <!-- License -->
+            <plugin>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+            </plugin>
+            <!-- Resources -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+            </plugin>
+
             <!-- Surefire : unit tests -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -707,22 +716,7 @@
                     <failIfNoTests>${fail.if.no.unit.tests}</failIfNoTests>
                     <!-- Sets the VM argument line used when unit tests are run. -->
                     <!-- allow argLine to be modified by other plugins, e.g. jacoco -->
-                    <argLine>@{surefire.argLine} -Xms256m -Xmx1G</argLine>
-                    <!-- Includes unit tests. -->
-                    <includes>
-                        <include>**/*UT.java</include>
-                        <include>**/*MT.java</include>
-                        <include>**/*Test.java</include>
-                        <include>**/*UTest.java</include>
-                    </includes>
-                    <!-- Excludes integration tests. -->
-                    <excludes>
-                        <exclude>**/*IT.java</exclude>
-                        <exclude>**/*ITest.java</exclude>
-                        <exclude>**/*IntegrationTest.java</exclude>
-                    </excludes>
-                    <!-- Save reports in particular directory -->
-                    <reportsDirectory>${surefire.reportsPath}</reportsDirectory>
+                    <argLine>@{argLine} -Xms256m -Xmx1G</argLine>
                 </configuration>
                 <executions>
                     <!-- Surefire has only one goal : test -->
@@ -745,22 +739,7 @@
                     <failIfNoTests>${fail.if.no.integration.tests}</failIfNoTests>
                     <!-- Sets the VM argument line used when integration tests are run. -->
                     <!-- allow argLine to be modified by other plugins, e.g. jacoco -->
-                    <argLine>@{failsafe.argLine} -Xms256m -Xmx1G -XX:PermSize=256m -XX:MaxPermSize=512m</argLine>
-                    <!-- Includes integration tests. -->
-                    <includes>
-                        <include>**/*IT.java</include>
-                        <include>**/*ITest.java</include>
-                        <include>**/*IntegrationTest.java</include>
-                    </includes>
-                    <!-- Excludes unit tests. -->
-                    <excludes>
-                        <exclude>**/*UT.java</exclude>
-                        <exclude>**/*MT.java</exclude>
-                        <exclude>**/*Test.java</exclude>
-                        <exclude>**/*UTest.java</exclude>
-                    </excludes>
-                    <!-- Save reports in particular directory -->
-                    <reportsDirectory>${failsafe.reportsPath}</reportsDirectory>
+                    <argLine>@{argLine} -Xms256m -Xmx1G -XX:PermSize=256m -XX:MaxPermSize=512m</argLine>
                 </configuration>
                 <executions>
                     <!-- Failsafe has four phases : pre-integration-test, integration-test, post-integration-test, verify  -->
@@ -797,19 +776,14 @@
                         <goals><goal>prepare-agent</goal></goals>
                         <configuration>
                             <skip>${skip.unit.tests}</skip>
-                            <propertyName>surefire.argLine</propertyName>
-                            <destFile>${jacoco.ut.data.file}</destFile>
                         </configuration>
                     </execution>
                     <execution>
                         <!-- Ensures code coverage report for unit tests is created after unit tests have been run. -->
                         <id>post-unit-tests</id>
-                        <phase>test</phase>
                         <goals><goal>report</goal></goals>
                         <configuration>
                             <skip>${skip.unit.tests}</skip>
-                            <dataFile>${jacoco.ut.data.file}</dataFile>
-                            <outputDirectory>${jacoco.ut.report}</outputDirectory>
                         </configuration>
                     </execution>
                     <execution>
@@ -819,8 +793,6 @@
                         <goals><goal>prepare-agent-integration</goal></goals>
                         <configuration>
                             <skip>${skip.integration.tests}</skip>
-                            <propertyName>failsafe.argLine</propertyName>
-                            <destFile>${jacoco.it.data.file}</destFile>
                         </configuration>
                     </execution>
                     <execution>
@@ -830,49 +802,8 @@
                         <goals><goal>report</goal></goals>
                         <configuration>
                             <skip>${skip.integration.tests}</skip>
-                            <dataFile>${jacoco.it.data.file}</dataFile>
-                            <outputDirectory>${jacoco.it.report}</outputDirectory>
                         </configuration>
                     </execution>
-                    <execution>
-                        <!-- Merge results from unit tests and integration tests  -->
-                        <id>merge-results</id>
-                        <phase>verify</phase>
-                        <goals><goal>merge</goal></goals>
-                        <configuration>
-                            <destFile>${jacoco.merge.data.file}</destFile>
-                            <fileSets>
-                                <fileSet>
-                                    <directory>${jacoco.basedir}</directory>
-                                    <includes>
-                                        <include>**/*.exec</include>
-                                    </includes>
-                                    <excludes>
-                                        <exclude>**/*merge.exec</exclude>
-                                    </excludes>
-                                </fileSet>
-                            </fileSets>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <!-- Ensures code coverage report is created after merge have been run. -->
-                        <id>post-merge-results</id>
-                        <phase>verify</phase>
-                        <goals><goal>report</goal></goals>
-                        <configuration>
-                            <dataFile>${jacoco.merge.data.file}</dataFile>
-                            <outputDirectory>${jacoco.report}</outputDirectory>
-                        </configuration>
-                    </execution>
-                    <!--<execution>-->
-                    <!--    &lt;!&ndash; Aggregate when working with multi modules. &ndash;&gt;-->
-                    <!--    <id>report-aggregate</id>-->
-                    <!--    <phase>verify</phase>-->
-                    <!--    <goals><goal>report-aggregate</goal></goals>-->
-                    <!--    <configuration>-->
-                    <!--        <outputDirectory>${jacoco.report}</outputDirectory>-->
-                    <!--    </configuration>-->
-                    <!--</execution>-->
                 </executions>
             </plugin>
         </plugins>
